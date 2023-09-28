@@ -1,4 +1,4 @@
-import 'package:bookingapp/views/login_screen.dart';
+import 'package:bookingapp/views/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(textTheme),
       ),
-      home: const LoginScreen(),
+      home: const DetailPage(),
     );
   }
 }
