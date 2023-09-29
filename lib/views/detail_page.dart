@@ -1,6 +1,5 @@
 
 import '../widgets/detail_widget.dart';
-import '../widgets/description_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,9 +19,8 @@ class DetailPage extends StatelessWidget{
           children: [
             greenIntroWidget(),
             const SizedBox(height: 10,),
-            detailWidget(),
-            const SizedBox(height: 18,),
-            descriptionWidget(),
+            detailWidget(context),
+
           ],
         ),
       ),
