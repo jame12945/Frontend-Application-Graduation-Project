@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Widget loginWidGet() {
+  Color customColor = Color(0xCCEFEEEE);
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 0.0),
     child: Stack(
@@ -91,11 +92,64 @@ Widget loginWidGet() {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(28.0),
               color: Colors.white,
-
             ),
-
             width: Get.width*0.75,
             height: Get.height*0.70,
+            alignment: Alignment.topCenter,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text(
+                    'Login',
+                    style:TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold
+
+                    ),
+                  ),
+                ),
+          SizedBox(height: 20,),
+
+          Container(
+            width: Get.width * 0.65,
+            child: TextFormField(
+              style: TextStyle(
+                color: Colors.black
+              ),
+              decoration: InputDecoration(
+                hintText: 'Input your email', // ข้อความตัวอย่างในช่องใส่ข้อความ
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                filled: true,
+                fillColor: customColor,
+
+              ),
+            ),
+          ),
+                SizedBox(height: 20,),
+
+                Container(
+                  width: Get.width * 0.65,
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: Colors.black
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Input your password', // ข้อความตัวอย่างในช่องใส่ข้อความ
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      filled: true,
+                      fillColor: customColor
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
           ),
         ),
       ],
