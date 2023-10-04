@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bookingapp/Utils/app.constrain.dart';
-import 'package:bookingapp/views/NextPage.dart';
+import 'package:bookingapp/views/HomePage.dart';
 import 'package:bookingapp/widgets/text_widget.dart';
 
 Widget detailWidget(BuildContext context) { // เพิ่มพารามิเตอร์ context
@@ -60,7 +60,7 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
           child:ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => NextPage(),
+                builder: (context) => HomePage(),
               ));
             },
             style: ElevatedButton.styleFrom(

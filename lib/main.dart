@@ -1,4 +1,6 @@
-import 'package:bookingapp/views/NextPage.dart';
+import 'package:bookingapp/views/HomePage.dart';
+import 'package:bookingapp/views/StatusFirstRoomPage.dart';
+import 'package:bookingapp/views/LoginPage.dart';
 import 'package:bookingapp/views/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
       ),
       home: DetailPage(), // Pass the context here
       routes: {
-        '/nextPage': (context) => NextPage(),
+        '/homePage': (context) => HomePage(),
+        '/loginPage': (context) => LoginPage(),
+        '/statusPage':(context) => StatusPage(),
       },
     );
   }
