@@ -1,8 +1,8 @@
-import 'package:bookingapp/widgets/login_widget.dart';
+import 'package:bookingapp/widgets/signup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              loginWidGet(context)
+             signUpWidGet(context),
 
             ],
           ),

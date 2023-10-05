@@ -1,10 +1,10 @@
 
-import 'package:bookingapp/views/SignUpPage.dart';
+import 'package:bookingapp/views/LoginPage.dart';
 import 'package:bookingapp/views/StatusFirstRoomPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget loginWidGet(BuildContext context) {
+Widget signUpWidGet(BuildContext context) {
   Color customColor = Color(0xCCEFEEEE);
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 0.0),
@@ -80,8 +80,8 @@ Widget loginWidGet(BuildContext context) {
               ),
               child: Text("Continue As Guest",
                 style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+                  fontSize: 20,
+                  color: Colors.black,
 
                 ),),
             ),
@@ -96,7 +96,7 @@ Widget loginWidGet(BuildContext context) {
               color: Colors.white,
             ),
             width: Get.width*0.75,
-            height: Get.height*0.55,
+            height: Get.height*0.6,
             alignment: Alignment.topCenter,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,33 +104,14 @@ Widget loginWidGet(BuildContext context) {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Text(
-                    'Login',
+                    'Sign Up',
                     style:TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold
 
                     ),
                   ),
                 ),
-          SizedBox(height: 20,),
-
-          Container(
-            width: Get.width * 0.65,
-            child: TextFormField(
-              style: TextStyle(
-                color: Colors.black
-              ),
-              decoration: InputDecoration(
-                hintText: 'Input your email', // ข้อความตัวอย่างในช่องใส่ข้อความ
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                filled: true,
-                fillColor: customColor,
-
-              ),
-            ),
-          ),
                 SizedBox(height: 20,),
 
                 Container(
@@ -140,46 +121,82 @@ Widget loginWidGet(BuildContext context) {
                         color: Colors.black
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Input your password', // ข้อความตัวอย่างในช่องใส่ข้อความ
+                      hintText: 'Firstname', // ข้อความตัวอย่างในช่องใส่ข้อความ
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       filled: true,
-                      fillColor: customColor
+                      fillColor: customColor,
+
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 10.0),
-                    child: InkWell(
-                      onTap: () {
-                        // สร้างการนำทางไปยังหน้าอื่นที่คุณต้องการ
-                        // ตัวอย่าง: Navigator.push(context, MaterialPageRoute(builder: (context) => YourNextPage()));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 10),
-                        child: Text(
-                          "Forgot Password ?",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.green,
-                          ),
+                SizedBox(height: 10,),
+
+                Container(
+                  width: Get.width * 0.65,
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: Colors.black
+                    ),
+                    decoration: InputDecoration(
+                        hintText: 'Phone', // ข้อความตัวอย่างในช่องใส่ข้อความ
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                      ),
+                        filled: true,
+                        fillColor: customColor
                     ),
                   ),
                 ),
+                SizedBox(height: 10,),
+
+                Container(
+                  width: Get.width * 0.65,
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: Colors.black
+                    ),
+                    decoration: InputDecoration(
+                        hintText: 'Email', // ข้อความตัวอย่างในช่องใส่ข้อความ
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        filled: true,
+                        fillColor: customColor
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 10,),
+
+                Container(
+                  width: Get.width * 0.65,
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: Colors.black
+                    ),
+                    decoration: InputDecoration(
+                        hintText: 'Password', // ข้อความตัวอย่างในช่องใส่ข้อความ
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        filled: true,
+                        fillColor: customColor
+                    ),
+                  ),
+                ),
+
+
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    margin: EdgeInsets.only(top: 10.0),
+                    margin: EdgeInsets.only(top: 30.0),
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => StatusPage()),
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -199,34 +216,6 @@ Widget loginWidGet(BuildContext context) {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: Colors.green)
-                    ),
-                    child: ElevatedButton(
-                      onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => SignUpPage()),);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.green,
-                        padding: EdgeInsets.symmetric(horizontal: 152,vertical: 11),
-                      ),
-                      child: Text(
-                        'Sign Up',
-                            style: TextStyle(
-                              fontSize: 20,
-
-                            ),
-                      ),
-
-                    ),
-                  ),
-                )
 
               ],
             ),
