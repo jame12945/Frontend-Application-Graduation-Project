@@ -1,21 +1,23 @@
+
+import 'package:bookingapp/widgets/status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class StatusPage extends StatelessWidget {
+  const StatusPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Status Page'),
-      ),
-      body: Center(
-        child: Text(
-          'This is a status page',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        body:Container(
+          width: Get.width,
+          height: Get.height,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              statusWidget()
+
+            ],
           ),
-        ),
-      ),
+        )
     );
   }
 }
