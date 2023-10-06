@@ -21,7 +21,7 @@ Widget statusWidget(){
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [Colors.black, Colors.black, Colors.green, Colors.green, Colors.green],
-                  stops: [0.0, 0.15, 0.85, 0.75, 1.0], // 0.25, 0.5, 0.75 คืออัตราส่วนสีดำ 1 ส่วนต่อสีเขียว 4 ส่วน
+                  stops: [0.0, 0.15, 0.84, 0.75, 1.0], // 0.25, 0.5, 0.75 คืออัตราส่วนสีดำ 1 ส่วนต่อสีเขียว 4 ส่วน
                 ),
               ),
               child: Align(
