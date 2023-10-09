@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bookingapp/Utils/app.constrain.dart';
-import 'package:bookingapp/views/HomePage.dart';
+import 'package:bookingapp/views/ReservationProcess_Page.dart';
 import 'package:bookingapp/widgets/text_widget.dart';
 
 Widget detailWidget(BuildContext context) { // เพิ่มพารามิเตอร์ context
@@ -27,7 +27,7 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
         textWidget(text: AppConstants.Detail, fontSize: 24, fontWeight: FontWeight.w600, fontColor: Colors.black),
         textWidget(text: AppConstants.Detaildescription, fontSize: 20, fontWeight: FontWeight.w500, fontColor: Colors.grey),
         SizedBox(
-          height: 40,
+          height: 30,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 50.0),
@@ -60,7 +60,7 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
           child:ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomePage(),
+                builder: (context) => ReservationPage(),
               ));
             },
             style: ElevatedButton.styleFrom(

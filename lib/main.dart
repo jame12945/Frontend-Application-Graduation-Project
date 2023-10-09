@@ -1,4 +1,5 @@
 import 'package:bookingapp/views/HomePage.dart';
+import 'package:bookingapp/views/ReservationProcess_Page.dart';
 import 'package:bookingapp/views/SignUpPage.dart';
 import 'package:bookingapp/views/StatusFirstRoomPage.dart';
 import 'package:bookingapp/views/LoginPage.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/loginPage': (context) => LoginPage(),
         '/statusPage':(context) => StatusPage(),
         '/signUpPage':(context) => SignUpPage(),
+        '/reservationPage':(context) => ReservationPage(),
       },
     );
   }
