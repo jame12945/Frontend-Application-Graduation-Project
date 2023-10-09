@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 Widget textWidget({
   required String text,
-           double fontSize = 22,
+           double fontSize = 24,
            FontWeight fontWeight= FontWeight.w600,
            Color? fontColor = Colors.black,
 }){

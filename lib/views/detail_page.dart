@@ -18,7 +18,7 @@ class DetailPage extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.start,//ไว้บน children ถ้าจะขยับไรงี้
           children: [
             greenIntroWidget(),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 4,),
             detailWidget(context),
 
           ],

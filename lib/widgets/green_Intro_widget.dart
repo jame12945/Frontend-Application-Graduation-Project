@@ -6,14 +6,14 @@ Widget greenIntroWidget() {
     width: Get.width,
     height: Get.height * 0.52,
     child: Transform.translate(
-      offset: Offset(0.0, -24.0), // ขยับขึ้นไป 10px ด้านบน
+      offset: Offset(0.0, -40.0), // ขยับขึ้นไป 10px ด้านบน
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/Room4person-Home.jpg'),
             fit: BoxFit.cover,
           ),
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(40.0),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

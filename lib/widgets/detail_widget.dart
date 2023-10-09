@@ -20,24 +20,24 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         textWidget(text: AppConstants.topicRoom),
-        textWidget(text: AppConstants.detailtopicRoom, fontSize: 20, fontWeight: FontWeight.w500, fontColor: Colors.grey),
+        textWidget(text: AppConstants.detailtopicRoom, fontSize: 22, fontWeight: FontWeight.w500, fontColor: Colors.grey),
         const SizedBox(
           height: 20,
         ),
-        textWidget(text: AppConstants.Detail, fontSize: 22, fontWeight: FontWeight.w600, fontColor: Colors.black),
-        textWidget(text: AppConstants.Detaildescription, fontSize: 18, fontWeight: FontWeight.w500, fontColor: Colors.grey),
+        textWidget(text: AppConstants.Detail, fontSize: 24, fontWeight: FontWeight.w600, fontColor: Colors.black),
+        textWidget(text: AppConstants.Detaildescription, fontSize: 20, fontWeight: FontWeight.w500, fontColor: Colors.grey),
         SizedBox(
-          height: 20,
+          height: 40,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 40.0),
+          padding: const EdgeInsets.only(left: 50.0),
           child: Row(
             children: List.generate(
               6,
                   (index) => Container(
-                width: 50, // ปรับขนาดตามที่คุณต้องการ
-                height: 50, // ปรับขนาดตามที่คุณต้องการ
-                margin: EdgeInsets.only(right: 28), // ระยะห่างระหว่างสี่เหลี่ยม
+                width: 65, // ปรับขนาดตามที่คุณต้องการ
+                height: 65, // ปรับขนาดตามที่คุณต้องการ
+                margin: EdgeInsets.only(right: 45), // ระยะห่างระหว่างสี่เหลี่ยม
                 child: ClipRect(
                   child: Container(
                     decoration: BoxDecoration(
@@ -53,7 +53,7 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
           ),
         ),
         SizedBox(
-          height: 20,
+          height: 30,
         ),
         Align(
           alignment: Alignment.center,
@@ -68,14 +68,14 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0)
                 ),
-                padding:EdgeInsets.symmetric(horizontal: 40 , vertical: 10)
+                padding:EdgeInsets.symmetric(horizontal: 80 , vertical: 10)
             ),
 
             child: Text(
               'Booking',
               style: TextStyle(
                 color: Colors.white, // สีข้อความ
-                fontSize: 20,
+                fontSize: 22,
 
               ),
             ),
