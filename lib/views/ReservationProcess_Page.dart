@@ -1,3 +1,4 @@
+
 import 'package:bookingapp/widgets/reservation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,9 @@ class ReservationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ReservationWidget(), // เรียกใช้งาน reservationWidGet จาก ReservationWidget
+            ReservationWidget(),
+
+
           ],
         ),
       ),
