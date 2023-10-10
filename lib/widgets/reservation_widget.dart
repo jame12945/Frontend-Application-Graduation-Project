@@ -119,7 +119,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Text('Date',style: TextStyle(fontSize: 21),),
+                Text('Dates',style: TextStyle(fontSize: 21),),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Container(
