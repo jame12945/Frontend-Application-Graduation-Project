@@ -21,12 +21,12 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         textWidget(text: AppConstants.topicRoom),
-        textWidget(text: AppConstants.detailtopicRoom, fontSize: 22, fontWeight: FontWeight.w500, fontColor: Colors.grey),
+        textWidget(text: AppConstants.detailtopicRoom, fontSize: 22, fontWeight: FontWeight.w400, fontColor: Colors.grey),
         const SizedBox(
           height: 20,
         ),
         textWidget(text: AppConstants.Detail, fontSize: 24, fontWeight: FontWeight.w600, fontColor: Colors.black),
-        textWidget(text: AppConstants.Detaildescription, fontSize: 20, fontWeight: FontWeight.w500, fontColor: Colors.grey),
+        textWidget(text: AppConstants.Detaildescription, fontSize: 20, fontWeight: FontWeight.w400, fontColor: Colors.grey),
         SizedBox(
           height: 30,
         ),

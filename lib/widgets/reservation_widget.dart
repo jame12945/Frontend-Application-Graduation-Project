@@ -13,10 +13,14 @@ class ReservationWidget extends StatefulWidget {
 class _ReservationWidgetState extends State<ReservationWidget> {
   String? _selectedValue;
   String? _selectedEndTimeValue;
+  List<String> selectedEmails = [];
+  String selectedEmail ='';
+  bool showEmailList = false;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController dateInput       = TextEditingController();
+  List<String> emails=['63010382@kmitl.ac.th','63010445@kmitl.ac.th','63010522@kmitl.ac.th','63010630@kmitl.ac.th','63010631@kmitl.ac.th','63010632@kmitl.ac.th'];
   List<String> images = [];
 
   Future<void> _addImage() async {
@@ -333,36 +337,94 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                      ],
                     ),
                     SizedBox(height: 20,),
-                    Text('Add Attendee',style: TextStyle(fontSize: 21),),
-                    // Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Expanded(
-                    //       child: ListView.builder(
-                    //         itemCount: images.length,
-                    //         itemBuilder: (context, index) {
-                    //           return Image.file(File(images[index]));
-                    //         },
-                    //       ),
-                    //     ),
-                    //     Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //       children: [
-                    //         IconButton(
-                    //           icon: Icon(Icons.add),
-                    //           onPressed: _addImage,
-                    //         ),
-                    //         IconButton(
-                    //           icon: Icon(Icons.send),
-                    //           onPressed: _inviteByEmail,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
-                    //
+                    Row(
+                      children: [
+                        Text('Add Attendee',style: TextStyle(fontSize: 21),),
+                        Transform.translate(
+                          offset: Offset(0.0, 1.0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 220.0),
+                            child: Text('Attendee Join',style: TextStyle(fontSize: 21),),
+                          ),
+                        )
 
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 650),
+                          width: 80,
+                          height: 80,
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Selected Attendee Email'),
+                                    content: Container(
+                                      width: 300, // ปรับขนาดของ Dialog ตามที่ต้องการ
+                                      height: 300, // ปรับขนาดของ Dialog ตามที่ต้องการ
+                                      child: ListView.builder(
+                                        itemCount: emails.length,
+                                        itemBuilder: (context, index) {
+                                          final email = emails[index];
+                                          if (selectedEmails.contains(email)) {
+                                            // ไม่แสดง email ที่ถูกเลือกแล้ว
+                                            return SizedBox.shrink(); // จะทำให้รายการไม่แสดง
+                                          }
+                                          else {
+                                            return ListTile(
+                                              title: Text(emails[index]),
+                                              onTap: () {
+                                                setState(() {
+                                                  selectedEmails.add(emails[index]); // เพิ่มรายชื่อ Email ที่ถูกเลือก
+                                                });
+                                                Navigator.of(context).pop();
+                                              },
+                                            );
+                                          }
 
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            icon: Image.asset('assets/icons8-add-50.png'),
+                          ),
+                        ),
+                        if (selectedEmails.isNotEmpty)
+                          Padding(
+                            
+                            padding: const EdgeInsets.only(left: 365.0),
+                            child: Container(
+                              
+                              child: Transform.translate(
+                                offset: Offset(0.0, -62.0),
+                                child: Column(
+                                  children: selectedEmails.map((email) {
+                                    return Row(
+                                      children: [
+                                        Container(
+                                         width: 40 , height: 60,
+                                            child: Image.asset('assets/icons8-person.png')),
+                                        SizedBox(height: 40), // ระยะห่างระหว่าง icon และรายชื่อ Email
+                                        Padding(
+                                          padding: const EdgeInsets.only(left:8.0),
+                                          child: Text(email,style: TextStyle(fontSize: 18),),
+                                        ), // แสดงรายชื่อ Email ที่ถูกเลือก
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    )
 
                   ],
                 ),
