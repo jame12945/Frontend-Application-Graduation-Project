@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookingapp/views/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -423,6 +424,35 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                               ),
                             ),
                           ),
+                        Transform.translate(
+                          offset: Offset(-30,-15),
+                          child: Container(
+
+                            child:ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black, // สีพื้นหลัง
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40.0)
+                                  ),
+                                  padding:EdgeInsets.symmetric(horizontal: 150 , vertical: 10)
+                              ),
+
+                              child: Text(
+                                'Booking',
+                                style: TextStyle(
+                                  color: Colors.white, // สีข้อความ
+                                  fontSize: 22,
+
+                                ),
+                              ),
+                            ),
+                        )
+                        )
                       ],
                     )
 
