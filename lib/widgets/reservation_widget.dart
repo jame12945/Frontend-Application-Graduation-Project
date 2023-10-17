@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bookingapp/views/AuthorizePage.dart';
 import 'package:bookingapp/views/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -431,7 +432,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                             child:ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => HomePage(),
+                                  builder: (context) => AuthorizePage(),
                                 ));
                               },
                               style: ElevatedButton.styleFrom(
