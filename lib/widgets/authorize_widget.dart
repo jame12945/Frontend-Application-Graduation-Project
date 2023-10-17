@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 
 class AuthorizeWidget extends StatefulWidget {
@@ -66,7 +68,28 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
       }
     }
   }
+//after facenet
+  Future<void> uploadImage(File imageFile) async {
+    final url = Uri.parse('YOUR_BACKEND_UPLOAD_URL'); // เปลี่ยน YOUR_BACKEND_UPLOAD_URL เป็น URL ของ backend ของคุณ
+    final request = http.MultipartRequest('POST', url);
+    request.files.add(
+      http.MultipartFile(
+        'image',
+        imageFile.readAsBytes().asStream(),
+        imageFile.lengthSync(),
+        filename: 'image.jpg',
+      ),
+    );
 
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      print('อัปโหลดภาพสำเร็จ');
+    } else {
+      print('เกิดข้อผิดพลาดในการอัปโหลดภาพ: ${response.reasonPhrase}');
+    }
+  }
+
+//////////
 
 
 
