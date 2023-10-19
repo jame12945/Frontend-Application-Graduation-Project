@@ -33,7 +33,10 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
     }
 
     // เรียกใช้ captureAndSaveImage เมื่อกล้องถูกเริ่มใช้งาน
-    captureAndSaveImage();
+    Future.delayed(Duration(seconds: 2),(){
+      captureAndSaveImage();
+    });
+
   }
   void captureAndSaveImage() async{
     if(controller!=null && controller!.value.isInitialized){
