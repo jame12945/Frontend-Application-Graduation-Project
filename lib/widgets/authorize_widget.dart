@@ -101,18 +101,53 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
       return CircularProgressIndicator();
     }
 
-    return Column(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: controller!.value.aspectRatio,
-          child: CameraPreview(controller!),
-        ),
-        Center(
-          child: Image.file(
-            File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg'),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Column(
+            children: [
+              Container(
+                height: 1220,
+                color:Color(0xFF101010),
+                child: Transform.translate(
+                  offset: Offset(0.0, -100),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:130.0,vertical:180 ),
+                    child: AspectRatio(
+                      aspectRatio: controller!.value.aspectRatio,
+                      child: CameraPreview(controller!),
+                    ),
+                  ),
+
+                ),
+
+              ),
+              Transform.translate(
+                offset:Offset(0, -1100),
+                  child: Text(
+                      "Look at the camera",
+                    style:TextStyle(
+                      fontSize: 28.0,
+                      color: Colors.white
+
+                    ) ,
+              ),
+              )
+
+              
+            ],
           ),
-        ),
-      ],
+     
+          // Transform.translate(
+          //   offset:  Offset(0.0, -600),
+          //   child: Center(
+          //     child: Image.file(
+          //       File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg'),
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }
