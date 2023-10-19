@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bookingapp/services/api.dart';
 import 'package:bookingapp/views/AuthorizePage.dart';
 import 'package:bookingapp/views/HomePage.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,9 @@ class _ReservationWidgetState extends State<ReservationWidget> {
   List<String> selectedEmails = [];
   String selectedEmail ='';
   bool showEmailList = false;
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  var _nameController = TextEditingController();
+  var _phoneController = TextEditingController();
+  var _emailController = TextEditingController();
   TextEditingController dateInput       = TextEditingController();
   List<String> emails=['63010382@kmitl.ac.th','63010445@kmitl.ac.th','63010522@kmitl.ac.th','63010630@kmitl.ac.th','63010631@kmitl.ac.th','63010632@kmitl.ac.th'];
   List<String> images = [];
@@ -83,7 +84,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
  // }
   //try to pu t name to database
   void sendReservationData() async {
-    final String url = 'https://10.0.2.2:3333/reservations'; // เปลี่ยน URL ไปยังเซิร์ฟเวอร์ Node.js ของคุณ
+    final String url = 'https://192.168.1.5/reservations'; // เปลี่ยน URL ไปยังเซิร์ฟเวอร์ Node.js ของคุณ
 
     // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์
     final Map<String, dynamic> reservationData = {
@@ -482,8 +483,13 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
                             child:ElevatedButton(
                               onPressed: () {
-                                  sendReservationData();
-
+                                  // sendReservationData();
+                                  var data = {
+                                    "pname":_nameController.text,
+                                    "pphone": _phoneController.text,
+                                    "pemail":_emailController.text
+                                  };
+                                  Api.addproduct(data);
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => AuthorizePage(),
                                   ));
