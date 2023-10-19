@@ -57,7 +57,7 @@ Widget loginWidGet(BuildContext context) {
                   padding:EdgeInsets.symmetric(horizontal: 150 , vertical: 10)
 
               ),
-              child: Text("Login",
+              child: Text("Logins",
                 style: TextStyle(
                     fontSize: 20
                 ),),

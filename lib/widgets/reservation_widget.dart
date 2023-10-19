@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bookingapp/views/AuthorizePage.dart';
@@ -7,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:http/http.dart' as http;
 class ReservationWidget extends StatefulWidget {
   @override
   _ReservationWidgetState createState() => _ReservationWidgetState();
@@ -60,7 +63,55 @@ class _ReservationWidgetState extends State<ReservationWidget> {
     dateInput.dispose();
     super.dispose();
   }
+ // void sendMessage(String message){
+ //    print(message);
+ //
+ //    WebSocketChannel channel;
+ //    try {
+ //      channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
+ //      channel.sink.add(message);
+ //      channel.stream.listen((message) {
+ //        print(message);
+ //        channel.sink.close();
+ //
+ //      });
+ //    }
+ //    catch (e){
+ //      print(e);
+ //    }
+ //    _nameController.clear();
+ // }
+  //try to pu t name to database
+  void sendReservationData() async {
+    final String url = 'https://10.0.2.2:3333/reservations'; // เปลี่ยน URL ไปยังเซิร์ฟเวอร์ Node.js ของคุณ
 
+    // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์
+    final Map<String, dynamic> reservationData = {
+      'UserId': 1, // ระบุค่า UserId ที่คุณต้องการ
+      'RoomId': 2, // ระบุค่า RoomId ที่คุณต้องการ
+      'Date': dateInput.text, // ค่า Date จาก TextField
+      'StartTime': _selectedValue, // ค่า StartTime จาก Dropdown
+      'EndTime': _selectedEndTimeValue, // ค่า EndTime จาก Dropdown
+      'RoomNum': 3, // ระบุค่า RoomNum ที่คุณต้องการ
+      'Name': _nameController.text, // ค่า Name จาก TextField
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(reservationData),
+    );
+
+    if (response.statusCode == 200) {
+      // บันทึกข้อมูลสำเร็จ
+      print('Reservation data saved successfully.');
+    } else {
+      // มีข้อผิดพลาดในการบันทึกข้อมูล
+      print('Failed to save reservation data. Status code: ${response.statusCode}');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     Color customColor = Color(0xFFDAC3A6);
@@ -431,9 +482,12 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
                             child:ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => AuthorizePage(),
-                                ));
+                                  sendReservationData();
+
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => AuthorizePage(),
+                                  ));
+
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.black, // สีพื้นหลัง
