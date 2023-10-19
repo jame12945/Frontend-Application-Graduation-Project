@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
+
 class AuthorizeWidget extends StatefulWidget {
   @override
   _AuthorizeWidgetState createState() => _AuthorizeWidgetState();
@@ -13,6 +14,7 @@ class AuthorizeWidget extends StatefulWidget {
 
 class _AuthorizeWidgetState extends State<AuthorizeWidget> {
   CameraController? controller;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -58,6 +60,9 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
             final imageFile = File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg');
             if(imageFile.existsSync()){
               print('Have Picture In Path');
+              setState(() {
+                isLoading = false;
+              });
             }else{
               print('Dont Have Picture In Path');
             }
@@ -101,53 +106,75 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
       return CircularProgressIndicator();
     }
 
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Column(
-            children: [
-              Container(
-                height: 1220,
-                color:Color(0xFF101010),
-                child: Transform.translate(
-                  offset: Offset(0.0, -100),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:130.0,vertical:180 ),
-                    child: AspectRatio(
-                      aspectRatio: controller!.value.aspectRatio,
-                      child: CameraPreview(controller!),
+
+      return SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Column(
+              children: [
+                Container(
+                  height: 1220,
+                  color: Color(0xFF101010),
+                  child: Transform.translate(
+                    offset: Offset(0.0, -100),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 130.0, vertical: 180),
+                      child: AspectRatio(
+                        aspectRatio: controller!.value.aspectRatio,
+                        child: CameraPreview(controller!),
+                      ),
                     ),
+
                   ),
 
                 ),
-
-              ),
-              Transform.translate(
-                offset:Offset(0, -1100),
+                Transform.translate(
+                  offset: Offset(0, -1100),
                   child: Text(
-                      "Look at the camera",
-                    style:TextStyle(
-                      fontSize: 28.0,
-                      color: Colors.white
+                    "Look at the camera",
+                    style: TextStyle(
+                        fontSize: 28.0,
+                        color: Colors.white
 
-                    ) ,
+                    ),
+                  ),
+                )
+
+
+              ],
+            ),
+            if (isLoading)
+              Transform.translate(
+                offset: Offset(0.0, -300),
+                child: Column(
+                  children: [
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:15.0),
+                      child: Text("loading",
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 20
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              )
-
-              
-            ],
-          ),
-     
-          // Transform.translate(
-          //   offset:  Offset(0.0, -600),
-          //   child: Center(
-          //     child: Image.file(
-          //       File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg'),
-          //     ),
-          //   ),
-          // ),
-        ],
-      ),
-    );
+            // Transform.translate(
+            //   offset:  Offset(0.0, -1000),
+            //   child: Center(
+            //     child: Image.file(
+            //       File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg'),
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
+      );
+    }
   }
-}
+
