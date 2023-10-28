@@ -155,60 +155,60 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                 ),
               ),
               SingleChildScrollView(
-                padding: const EdgeInsets.only(top: 490, left: 60),
+                padding: const EdgeInsets.only(top: 490, left: 85),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Name',
-                      style: TextStyle(fontSize: 21),
-                    ),
-                    SizedBox(height: 2),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 1.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextFormField(
-                          controller: _nameController,
-                          style: TextStyle(color: Colors.brown, fontSize: 18),
-                          decoration: InputDecoration(hintText: 'Enter your name'),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Phone',
-                      style: TextStyle(fontSize: 21),
-                    ),
-                    SizedBox(height: 2),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 1.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextFormField(
-                          controller: _phoneController,
-                          style: TextStyle(color: Colors.brown, fontSize: 18),
-                          decoration: InputDecoration(hintText: 'Enter your phone'),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Email',
-                      style: TextStyle(fontSize: 21),
-                    ),
-                    SizedBox(height: 2),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 1.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextFormField(
-                          controller: _emailController,
-                          style: TextStyle(color: Colors.brown, fontSize: 18),
-                          decoration: InputDecoration(hintText: 'Enter your email'),
-                        ),
-                      ),
-                    ),
+                    // Text(
+                    //   'Name',
+                    //   style: TextStyle(fontSize: 21),
+                    // ),
+                    // SizedBox(height: 2),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 1.0),
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width * 0.8,
+                    //     child: TextFormField(
+                    //       controller: _nameController,
+                    //       style: TextStyle(color: Colors.brown, fontSize: 18),
+                    //       decoration: InputDecoration(hintText: 'Enter your name'),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: 20),
+                    // Text(
+                    //   'Phone',
+                    //   style: TextStyle(fontSize: 21),
+                    // ),
+                    // SizedBox(height: 2),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 1.0),
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width * 0.8,
+                    //     child: TextFormField(
+                    //       controller: _phoneController,
+                    //       style: TextStyle(color: Colors.brown, fontSize: 18),
+                    //       decoration: InputDecoration(hintText: 'Enter your phone'),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: 20),
+                    // Text(
+                    //   'Email',
+                    //   style: TextStyle(fontSize: 21),
+                    // ),
+                    // SizedBox(height: 2),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 1.0),
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width * 0.8,
+                    //     child: TextFormField(
+                    //       controller: _emailController,
+                    //       style: TextStyle(color: Colors.brown, fontSize: 18),
+                    //       decoration: InputDecoration(hintText: 'Enter your email'),
+                    //     ),
+                    //   ),
+                    // ),
 
                     SizedBox(height: 20),
                     Text('Date',style: TextStyle(fontSize: 21),),
@@ -252,7 +252,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 ,
                     Stack(
                      children: [
-                       Row(
+                       Column(
                          children: [
                            Stack(
                              children: [
@@ -317,12 +317,11 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
                              ],
                            ),
-
-
+                           SizedBox(height: 20),
                            Stack(
                              children: [
                                Padding(
-                                 padding: const EdgeInsets.only(left:84.0),
+                                 padding: const EdgeInsets.only(left:10.0),
                                  child: Text(
                                    'End Time',
                                    style: TextStyle(
@@ -332,7 +331,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                ),
                                SizedBox(height: 4),
                                Padding(
-                                 padding: const EdgeInsets.only(left: 84.0,top:40),
+                                 padding: const EdgeInsets.only(left: 5.0,top:40),
                                  child: Container(
                                    width: Get.width*0.35,
                                    decoration: BoxDecoration(
