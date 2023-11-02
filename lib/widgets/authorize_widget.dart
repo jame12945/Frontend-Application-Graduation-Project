@@ -1,3 +1,4 @@
+import 'package:bookingapp/views/FoundUserPage.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
@@ -7,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 
 
+
 class AuthorizeWidget extends StatefulWidget {
   @override
   _AuthorizeWidgetState createState() => _AuthorizeWidgetState();
@@ -14,15 +16,18 @@ class AuthorizeWidget extends StatefulWidget {
 
 class _AuthorizeWidgetState extends State<AuthorizeWidget> {
   CameraController? controller;
+
   bool isLoading = true;
   bool isIdentityVerified = false;
   String name = "";
+  // String? detectedName;
 
 
   @override
   void initState() {
     super.initState();
     initCamera();
+    resetName();
   }
 
   void initCamera() async {
@@ -78,7 +83,11 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
       }
     }
   }
-
+  void resetName() {
+    setState(() {
+      name = "";
+    });
+  }
   void captureAndVerifyIdentity(){
     Future.delayed(Duration(seconds: 2),(){
       setState(() {
@@ -88,7 +97,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
     });
   }
 
-  Future<void> uploadImage(File imageFile) async {
+  void uploadImage(File imageFile) async {
     final url = Uri.parse('http://10.0.2.2:8000/recognize-face/');
     final request = http.MultipartRequest('POST', url);
     request.files.add(
@@ -117,15 +126,30 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
       // อัปเดตค่า name ด้วยชื่อที่ได้รับจากเซิร์ฟเวอร์
       setState(() {
         name = recognizedName;
+        // detectedName = recognizedName;
         isLoading = false;
         isIdentityVerified = true;
       });
 
-      // แสดงชื่อในโครงสร้างของหน้าแสดงผลบน Emulator
+
+
+      // ส่งค่า name ไปยังหน้า FoundUserPage
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FoundUserPage(name: recognizedName),
+        ),
+      ).then((_){
+        setState(() {
+          name = "";
+        });
+      });
+
     } else {
       print('เกิดข้อผิดพลาดในการอัปโหลดภาพ: ${response.reasonPhrase}');
     }
   }
+
 
 
   @override
@@ -141,89 +165,89 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
     }
 
 
-      return SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Column(
-              children: [
-                Container(
-                  height: 1220,
-                  color: Color(0xFF101010),
-                  child: Transform.translate(
-                    offset: Offset(0.0, -100),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 130.0, vertical: 180),
-                      child: AspectRatio(
-                        aspectRatio: controller!.value.aspectRatio,
-                        child: CameraPreview(controller!),
-                      ),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Column(
+            children: [
+              Container(
+                height: 1220,
+                color: Color(0xFF101010),
+                child: Transform.translate(
+                  offset: Offset(0.0, -100),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 130.0, vertical: 180),
+                    child: AspectRatio(
+                      aspectRatio: controller!.value.aspectRatio,
+                      child: CameraPreview(controller!),
                     ),
-
                   ),
 
                 ),
 
-                Transform.translate(
-                  offset: Offset(0, -1100),
-                  child: Text(
-                    "Look at the camera",
-                    style: TextStyle(
-                        fontSize: 28.0,
-                        color: Colors.white
+              ),
 
-                    ),
-                  ),
-                ),
-                Transform.translate(
-                  offset: Offset(0,-300),
-                  child: Text(
-                    name,  // ใช้ตัวแปร name ที่เก็บชื่อจากเซิร์ฟเวอร์
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 30,
-                    ),
-                  ),
-                ),
-                // Transform.translate(
-                //   offset:  Offset(0.0, -900),
-                //   child: Center(
-                //     child: Image.file(
-                //       File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg'),
-                //     ),
-                //   ),
-                // ),
-
-
-              ],
-            ),
-            if (isLoading)
               Transform.translate(
-                offset: Offset(0.0, -300),
-                child: Column(
-                  children: [
-                    Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top:15.0),
-                      child: Text("loading",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 20
-                        ),
-                      ),
-                    ),
+                offset: Offset(0, -1100),
+                child: Text(
+                  "Look at the camera",
+                  style: TextStyle(
+                      fontSize: 28.0,
+                      color: Colors.white
 
-
-
-                  ],
+                  ),
+                ),
+              ),
+              Transform.translate(
+                offset: Offset(0,-300),
+                child: Text(
+                  name,  // ใช้ตัวแปร name ที่เก็บชื่อจากเซิร์ฟเวอร์
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 30,
+                  ),
                 ),
               ),
 
-          ],
-        ),
-      );
-    }
-  }
+              // Transform.translate(
+              //   offset:  Offset(0.0, -900),
+              //   child: Center(
+              //     child: Image.file(
+              //       File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg'),
+              //     ),
+              //   ),
+              // ),
 
+
+            ],
+          ),
+          if (isLoading)
+            Transform.translate(
+              offset: Offset(0.0, -300),
+              child: Column(
+                children: [
+                  Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:15.0),
+                    child: Text("loading",
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 20
+                      ),
+                    ),
+                  ),
+
+
+
+                ],
+              ),
+            ),
+
+        ],
+      ),
+    );
+  }
+}
