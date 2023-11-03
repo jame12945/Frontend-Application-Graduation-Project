@@ -19,7 +19,9 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
 
   bool isLoading = true;
   bool isIdentityVerified = false;
+  bool newName = false;
   String name = "";
+
   // String? detectedName;
 
 
@@ -108,7 +110,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
         filename: 'image.jpg',
       ),
     );
-
+  try {
     final response = await request.send();
     if (response.statusCode == 200) {
       print('อัปโหลดภาพสำเร็จ');
@@ -131,23 +133,45 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
         isIdentityVerified = true;
       });
 
-
-
-      // ส่งค่า name ไปยังหน้า FoundUserPage
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => FoundUserPage(name: recognizedName),
-        ),
-      ).then((_){
+      print("newName1");
+      print(newName);
+      if (newName == true) {
         setState(() {
-          name = "";
+          name = recognizedName;
+          newName = true;
         });
-      });
 
-    } else {
-      print('เกิดข้อผิดพลาดในการอัปโหลดภาพ: ${response.reasonPhrase}');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FoundUserPage(name: recognizedName),
+          ),
+        );
+      } //ถ้าไม่ค่า name เหมือนเดิมให้ส่งค่า newName = true
+      else if (recognizedName == name) {
+        print("newName2");
+        print(newName);
+        setState(() {
+          newName = true;
+        });
+      }
+      else {
+        setState(() {
+          newName = false;
+        });
+      }
     }
+  }catch (e) {
+    setState(() {
+      newName = true;
+    });
+  }
+
+
+
+    //  else {
+    //   print('เกิดข้อผิดพลาดในการอัปโหลดภาพ: ${response.reasonPhrase}');
+    // }
   }
 
 
