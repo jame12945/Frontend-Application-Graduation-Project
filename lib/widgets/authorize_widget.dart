@@ -1,4 +1,6 @@
+import 'package:bookingapp/views/AuthorizePage.dart';
 import 'package:bookingapp/views/FoundUserPage.dart';
+import 'package:bookingapp/views/ReservationProcess_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,10 +18,11 @@ class AuthorizeWidget extends StatefulWidget {
 
 class _AuthorizeWidgetState extends State<AuthorizeWidget> {
   CameraController? controller;
-
+  bool isError = false;
   bool isLoading = true;
   bool isIdentityVerified = false;
   bool newName = false;
+  bool notShow = false;
   String name = "";
 
   // String? detectedName;
@@ -71,11 +74,18 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
           final imageFile = File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg');
           if (imageFile.existsSync()) {
             print('Have Picture In Path');
+
+            // ตอนนี้เรียก uploadImage ด้วยไฟล์ที่ถูกบันทึกแล้ว
+            uploadImage(saveFile);
             setState(() {
               isLoading = false;
             });
-            // ตอนนี้เรียก uploadImage ด้วยไฟล์ที่ถูกบันทึกแล้ว
-            uploadImage(saveFile);
+            Future.delayed(Duration(seconds: 2),(){
+              setState(() {
+                isError = true;
+              });
+            });
+
           } else {
             print('Dont Have Picture In Path');
           }
@@ -93,7 +103,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
   void captureAndVerifyIdentity(){
     Future.delayed(Duration(seconds: 2),(){
       setState(() {
-        isLoading = false;
+        isLoading = true;
         isIdentityVerified = true;
       });
     });
@@ -129,7 +139,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
       setState(() {
         name = recognizedName;
         // detectedName = recognizedName;
-        isLoading = false;
+        isLoading = true;
         isIdentityVerified = true;
       });
 
@@ -155,6 +165,13 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
           newName = true;
         });
       }
+      else if (isError == true) {
+        Future.delayed(Duration(seconds: 2), () {
+          setState(() {
+
+          });
+        });
+      }
       else {
         setState(() {
           newName = false;
@@ -164,6 +181,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
   }catch (e) {
     setState(() {
       newName = true;
+
     });
   }
 
@@ -223,16 +241,16 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
                   ),
                 ),
               ),
-              Transform.translate(
-                offset: Offset(0,-300),
-                child: Text(
-                  name,  // ใช้ตัวแปร name ที่เก็บชื่อจากเซิร์ฟเวอร์
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 30,
-                  ),
-                ),
-              ),
+              // Transform.translate(
+              //   offset: Offset(0,-300),
+              //   child: Text(
+              //     name,  // ใช้ตัวแปร name ที่เก็บชื่อจากเซิร์ฟเวอร์
+              //     style: TextStyle(
+              //       color: Colors.blue,
+              //       fontSize: 30,
+              //     ),
+              //   ),
+              // ),
 
               // Transform.translate(
               //   offset:  Offset(0.0, -900),
@@ -269,6 +287,41 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
                 ],
               ),
             ),
+          if(isError == true)
+            Transform.translate(
+              offset: Offset(0.0, -200.0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top:0.0),
+                  child: ElevatedButton(
+                    onPressed:(){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context)=>AuthorizePage())
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+
+
+                       shape: RoundedRectangleBorder(
+                         borderRadius: BorderRadius.circular(30.0)
+                       ),
+                      padding:EdgeInsets.symmetric(horizontal: 100 , vertical: 10)
+                      ,
+                    ),
+                    child: Text("Retry",style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 26,
+
+                    ),),
+
+                  ),
+                )
+              ),
+            )
+
 
         ],
       ),
