@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 class FoundUserPage extends StatefulWidget {
   final String name;
 
+
   FoundUserPage({required this.name});
 
   @override

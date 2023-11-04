@@ -86,6 +86,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
               });
             });
 
+
           } else {
             print('Dont Have Picture In Path');
           }
@@ -165,13 +166,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
           newName = true;
         });
       }
-      else if (isError == true) {
-        Future.delayed(Duration(seconds: 2), () {
-          setState(() {
 
-          });
-        });
-      }
       else {
         setState(() {
           newName = false;

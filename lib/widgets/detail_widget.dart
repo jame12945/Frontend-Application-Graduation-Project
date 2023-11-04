@@ -69,11 +69,11 @@ Widget detailWidget(BuildContext context) { // เพิ่มพารามิ
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0)
                 ),
-                padding:EdgeInsets.symmetric(horizontal: 80 , vertical: 10)
+                padding:EdgeInsets.symmetric(horizontal: 90 , vertical: 10)
             ),
 
             child: Text(
-              'Booking',
+              'Select',
               style: TextStyle(
                 color: Colors.white, // สีข้อความ
                 fontSize: 22,
