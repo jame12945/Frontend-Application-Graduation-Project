@@ -80,7 +80,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
             setState(() {
               isLoading = false;
             });
-            Future.delayed(Duration(seconds: 2),(){
+            Future.delayed(Duration(seconds: 1),(){
               setState(() {
                 isError = true;
               });
