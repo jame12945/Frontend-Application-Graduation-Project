@@ -100,6 +100,120 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 ),
                             ),
                              ),
+                            Column(
+                              children: [
+                                Transform.translate(
+                                  offset: Offset(-120,-30),
+                                  child: Text(
+                                    'Attendance ID',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
+                                ),
+                                //เดี๋ยวต้องดึงข้อมูล Database ตรงนี้
+                                Transform.translate(
+                                  offset: Offset(-166,-25),
+                                  child: Text(
+                                    "10",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.brown,
+
+
+                                    ),
+                                  ),
+                                )
+                              ],
+
+                            ),
+                            Column(
+                              children: [
+                                Transform.translate(
+                                  offset: Offset(120,-87),
+                                  child: Text(
+                                    'Start - End  Time',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
+                                ),
+                                //เดี๋ยวต้องดึงข้อมูล Database ตรงนี้
+                                Transform.translate(
+                                  offset: Offset(60,-81),
+                                  child: Text(
+                                    "10",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.brown,
+
+
+                                    ),
+                                  ),
+                                )
+                              ],
+
+                            ),
+                            Column(
+                              children: [
+                                Transform.translate(
+                                  offset: Offset(-160,-30),
+                                  child: Text(
+                                    'Role',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
+                                ),
+                                //เดี๋ยวต้องดึงข้อมูล Database ตรงนี้
+                                Transform.translate(
+                                  offset: Offset(-164,-25),
+                                  child: Text(
+                                    "10",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.brown,
+
+
+                                    ),
+                                  ),
+                                )
+                              ],
+
+                            ),
+                            Column(
+                              children: [
+                                Transform.translate(
+                                  offset: Offset(72,-87),
+                                  child: Text(
+                                    'Date',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
+                                ),
+                                //เดี๋ยวต้องดึงข้อมูล Database ตรงนี้
+                                Transform.translate(
+                                  offset: Offset(64,-81),
+                                  child: Text(
+                                    "10",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.brown,
+
+
+                                    ),
+                                  ),
+                                )
+                              ],
+
+                            ),
+
+
 
                           ],
 
