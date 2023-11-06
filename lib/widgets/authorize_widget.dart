@@ -203,6 +203,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
 
 
     return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
       child: Column(
         children: <Widget>[
           Column(

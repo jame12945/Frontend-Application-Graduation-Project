@@ -1,3 +1,4 @@
+import 'package:bookingapp/views/ProofPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class FoundUserPage extends StatefulWidget {
@@ -142,9 +143,9 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 ),
                                 //เดี๋ยวต้องดึงข้อมูล Database ตรงนี้
                                 Transform.translate(
-                                  offset: Offset(60,-81),
+                                  offset: Offset(104,-81),
                                   child: Text(
-                                    "10",
+                                    "19.00-20.00",
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.brown,
@@ -170,9 +171,9 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 ),
                                 //เดี๋ยวต้องดึงข้อมูล Database ตรงนี้
                                 Transform.translate(
-                                  offset: Offset(-164,-25),
+                                  offset: Offset(-156,-25),
                                   child: Text(
-                                    "10",
+                                    "Host",
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.brown,
@@ -198,14 +199,37 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 ),
                                 //เดี๋ยวต้องดึงข้อมูล Database ตรงนี้
                                 Transform.translate(
-                                  offset: Offset(64,-81),
+                                  offset: Offset(100,-81),
                                   child: Text(
-                                    "10",
+                                    "2023-11-16",
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.brown,
 
 
+                                    ),
+                                  ),
+                                ),
+                                Transform.translate(
+                                  offset: Offset(0, -10),
+                                  child: ElevatedButton(
+                                      onPressed: (){
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => ProofPage(name: widget.name),
+                                        ));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                           backgroundColor: Colors.green,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20)
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 60,vertical: 8)
+                                      ),
+                                    child: Text(
+                                      'Next',
+                                      style:TextStyle(
+                                        fontSize: 20,
+                                      ) ,
                                     ),
                                   ),
                                 )
