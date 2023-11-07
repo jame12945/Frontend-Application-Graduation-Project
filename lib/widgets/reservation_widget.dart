@@ -57,6 +57,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
   }
 
 
+
   @override
   void dispose() {
     // ควรจะ dispose controllers เมื่อไม่ได้ใช้งานเพื่อป้องกันการหลุดหน่วยความจำ
@@ -66,37 +67,34 @@ class _ReservationWidgetState extends State<ReservationWidget> {
     dateInput.dispose();
     super.dispose();
   }
- // void sendMessage(String message){
- //    print(message);
- //
- //    WebSocketChannel channel;
- //    try {
- //      channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
- //      channel.sink.add(message);
- //      channel.stream.listen((message) {
- //        print(message);
- //        channel.sink.close();
- //
- //      });
- //    }
- //    catch (e){
- //      print(e);
- //    }
- //    _nameController.clear();
- // }
+  // void sendMessage(String message){
+  //    print(message);
+  //
+  //    WebSocketChannel channel;
+  //    try {
+  //      channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
+  //      channel.sink.add(message);
+  //      channel.stream.listen((message) {
+  //        print(message);
+  //        channel.sink.close();
+  //
+  //      });
+  //    }
+  //    catch (e){
+  //      print(e);
+  //    }
+  //    _nameController.clear();
+  // }
   //try to pu t name to database
   void sendReservationData() async {
-    final String url = 'https://192.168.1.5/reservations'; // เปลี่ยน URL ไปยังเซิร์ฟเวอร์ Node.js ของคุณ
+    final String url = 'http://10.0.2.2:3000/reserveroom/9'; // แก้ไข URL ตามที่คุณต้องการ
 
-    // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์
     final Map<String, dynamic> reservationData = {
-      'UserId': 1, // ระบุค่า UserId ที่คุณต้องการ
-      'RoomId': 2, // ระบุค่า RoomId ที่คุณต้องการ
-      'Date': dateInput.text, // ค่า Date จาก TextField
-      'StartTime': _selectedValue, // ค่า StartTime จาก Dropdown
-      'EndTime': _selectedEndTimeValue, // ค่า EndTime จาก Dropdown
-      'RoomNum': 3, // ระบุค่า RoomNum ที่คุณต้องการ
-      'Name': _nameController.text, // ค่า Name จาก TextField
+      "start_time": _selectedValue, // แก้ไขค่าตามที่คุณต้องการ
+      "end_time": _selectedEndTimeValue, // แก้ไขค่าตามที่คุณต้องการ
+      "date_reservation": dateInput.text, // แก้ไขค่าตามที่คุณต้องการ
+      "update_reservlog": "2020-21-23", // แก้ไขค่าตามที่คุณต้องการ
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNCwidXNlcm5hbWUiOiJKb2hueTUiLCJpYXQiOjE2OTkzMzM3OTEsImV4cCI6MTY5OTM3Njk5MX0.iGzl0ZqmZ8adFCF4fRdP--jtatpnCpjK22yipAx_vNg", // แทนที่ด้วย JWT token ของคุณ
     };
 
     final response = await http.post(
@@ -109,10 +107,10 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
     if (response.statusCode == 200) {
       // บันทึกข้อมูลสำเร็จ
-      print('Reservation data saved successfully.');
+      print('บันทึกข้อมูลการจองสำเร็จ');
     } else {
       // มีข้อผิดพลาดในการบันทึกข้อมูล
-      print('Failed to save reservation data. Status code: ${response.statusCode}');
+      print('ไม่สามารถบันทึกข้อมูลการจอง รหัสสถานะ: ${response.statusCode}');
     }
   }
   @override
@@ -217,7 +215,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20.0),
                       child: Container(
-                         width: 640,
+                          width: 640,
                           child: Center(
 
                               child: TextField(
@@ -232,11 +230,11 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                 //set it true, so that user will not able to edit text
                                 onTap: () async {
                                   DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1950),
-                                      //DateTime.now() - not to allow to choose before today.
-                                      lastDate: DateTime(2100),
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1950),
+                                    //DateTime.now() - not to allow to choose before today.
+                                    lastDate: DateTime(2100),
                                   );
 
                                   if (pickedDate != null) {
@@ -252,145 +250,145 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                 },
                               ))),
                     )
-,
+                    ,
                     Stack(
-                     children: [
-                       Column(
-                         children: [
-                           Stack(
-                             children: [
-                               Text(
-                                 'Start Time',
-                                 style: TextStyle(
-                                   fontSize: 21,
-                                 ),
-                               ),
-                               SizedBox(height: 6),
-                               Padding(
-                                 padding: const EdgeInsets.only(top: 40.0),
-                                 child: Container(
-                                   width: Get.width*0.35,
-                                   decoration: BoxDecoration(
-                                     borderRadius: BorderRadius.circular(8.0),
-                                     border: Border.all(color: Colors.brown, width: 1.0),
-                                   ),
-                                   child: DropdownButton<String?>(
-                                     icon: Padding(
-                                       padding: const EdgeInsets.only(left: 68.0),
-                                       child: Icon(Icons.arrow_drop_down_circle_outlined),
-                                     ),
-                                     items: <String?>['18.00', '19.00','20.00', '21.00', '22.00'].map<DropdownMenuItem<String?>>((String? value) {
-                                       return DropdownMenuItem<String?>(
-                                         value: value,
-                                         child: Padding(
-                                           padding: const EdgeInsets.only(left: 100.0),
-                                           child: Text(
-                                             value ?? '',
-                                             style: TextStyle(
-                                               color: Colors.black,
-                                               fontSize: 19,
+                      children: [
+                        Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Text(
+                                  'Start Time',
+                                  style: TextStyle(
+                                    fontSize: 21,
+                                  ),
+                                ),
+                                SizedBox(height: 6),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 40.0),
+                                  child: Container(
+                                    width: Get.width*0.35,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(color: Colors.brown, width: 1.0),
+                                    ),
+                                    child: DropdownButton<String?>(
+                                      icon: Padding(
+                                        padding: const EdgeInsets.only(left: 68.0),
+                                        child: Icon(Icons.arrow_drop_down_circle_outlined),
+                                      ),
+                                      items: <String?>['18:00:00', '19:00:00','20:00:00', '21:00:00', '22:00:00'].map<DropdownMenuItem<String?>>((String? value) {
+                                        return DropdownMenuItem<String?>(
+                                          value: value,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 100.0),
+                                            child: Text(
+                                              value ?? '',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 19,
 
-                                             ),
-                                           ),
-                                         ),
-                                       );
-                                     }).toList(),
-                                     onChanged: (String? value) {
-                                       setState(() {
-                                         _selectedValue = value;
-                                       });
-                                       print('value');
-                                       print(_selectedValue);
-                                     },
-                                     hint: Padding(
-                                       padding: const EdgeInsets.only(left: 48.0),
-                                       child: Text(
-                                         " Choose time",
-                                         style: TextStyle(
-                                           color: Colors.black,
-                                           fontSize: 18,
-                                         ),
-                                       ),
-                                     ),
-                                     value: _selectedValue,
-                                   ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          _selectedValue = value;
+                                        });
+                                        print('value');
+                                        print(_selectedValue);
+                                      },
+                                      hint: Padding(
+                                        padding: const EdgeInsets.only(left: 48.0),
+                                        child: Text(
+                                          " Choose time",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                      value: _selectedValue,
+                                    ),
 
-                                 ),
-                               ),
+                                  ),
+                                ),
 
-                             ],
-                           ),
-                           SizedBox(height: 20),
-                           Stack(
-                             children: [
-                               Padding(
-                                 padding: const EdgeInsets.only(left:10.0),
-                                 child: Text(
-                                   'End Time',
-                                   style: TextStyle(
-                                     fontSize: 21,
-                                   ),
-                                 ),
-                               ),
-                               SizedBox(height: 4),
-                               Padding(
-                                 padding: const EdgeInsets.only(left: 5.0,top:40),
-                                 child: Container(
-                                   width: Get.width*0.35,
-                                   decoration: BoxDecoration(
-                                     borderRadius: BorderRadius.circular(8.0),
-                                     color: Colors.white,
-                                     border: Border.all(color: Colors.brown, width: 1.0),
-                                   ),
-                                   child: DropdownButton<String?>(
-                                     icon: Padding(
-                                       padding: const EdgeInsets.only(left: 68.0),
-                                       child: Icon(Icons.arrow_drop_down_circle_outlined),
-                                     ),
-                                     items: <String?>[ '19.00','20.00', '21.00', '22.00'].map<DropdownMenuItem<String?>>((String? value) {
-                                       return DropdownMenuItem<String?>(
-                                         value: value,
-                                         child: Padding(
-                                           padding: const EdgeInsets.only(left: 100.0),
-                                           child: Text(
-                                             value ?? '',
-                                             style: TextStyle(
-                                               color: Colors.black,
-                                               fontSize: 19,
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left:10.0),
+                                  child: Text(
+                                    'End Time',
+                                    style: TextStyle(
+                                      fontSize: 21,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0,top:40),
+                                  child: Container(
+                                    width: Get.width*0.35,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.brown, width: 1.0),
+                                    ),
+                                    child: DropdownButton<String?>(
+                                      icon: Padding(
+                                        padding: const EdgeInsets.only(left: 68.0),
+                                        child: Icon(Icons.arrow_drop_down_circle_outlined),
+                                      ),
+                                      items: <String?>[ '19:00:00','20:00:00', '21:00:00', '22:00:00'].map<DropdownMenuItem<String?>>((String? value) {
+                                        return DropdownMenuItem<String?>(
+                                          value: value,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 100.0),
+                                            child: Text(
+                                              value ?? '',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 19,
 
-                                             ),
-                                           ),
-                                         ),
-                                       );
-                                     }).toList(),
-                                     onChanged: (String? value) {
-                                       setState(() {
-                                         _selectedEndTimeValue = value;
-                                       });
-                                       print('value');
-                                       print(_selectedEndTimeValue);
-                                     },
-                                     hint: Padding(
-                                       padding: const EdgeInsets.only(left: 48.0),
-                                       child: Text(
-                                         " Choose time",
-                                         style: TextStyle(
-                                           color: Colors.black,
-                                           fontSize: 18,
-                                         ),
-                                       ),
-                                     ),
-                                     value: _selectedEndTimeValue,
-                                   ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          _selectedEndTimeValue = value;
+                                        });
+                                        print('value');
+                                        print(_selectedEndTimeValue);
+                                      },
+                                      hint: Padding(
+                                        padding: const EdgeInsets.only(left: 48.0),
+                                        child: Text(
+                                          " Choose time",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                      value: _selectedEndTimeValue,
+                                    ),
 
-                                 ),
-                               ),
-                             ],
-                           ),
+                                  ),
+                                ),
+                              ],
+                            ),
 
-                         ],
-                       )
-                     ],
+                          ],
+                        )
+                      ],
                     ),
                     SizedBox(height: 20,),
                     Row(
@@ -454,10 +452,10 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                         ),
                         if (selectedEmails.isNotEmpty)
                           Padding(
-                            
+
                             padding: const EdgeInsets.only(left: 365.0),
                             child: Container(
-                              
+
                               child: Transform.translate(
                                 offset: Offset(0.0, -62.0),
                                 child: Column(
@@ -465,7 +463,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                     return Row(
                                       children: [
                                         Container(
-                                         width: 40 , height: 60,
+                                            width: 40 , height: 60,
                                             child: Image.asset('assets/icons8-person.png')),
                                         SizedBox(height: 40), // ระยะห่างระหว่าง icon และรายชื่อ Email
                                         Padding(
@@ -480,12 +478,12 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                             ),
                           ),
                         Transform.translate(
-                          offset: Offset(-30,-15),
-                          child: Container(
+                            offset: Offset(-30,-15),
+                            child: Container(
 
-                            child:ElevatedButton(
-                              onPressed: () {
-                                  // sendReservationData();
+                              child:ElevatedButton(
+                                onPressed: () {
+                                   sendReservationData();
                                   var data = {
                                     "pname":_nameController.text,
                                     "pphone": _phoneController.text,
@@ -496,25 +494,25 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                     builder: (context) => AuthorizePage(),
                                   ));
 
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black, // สีพื้นหลัง
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40.0)
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black, // สีพื้นหลัง
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40.0)
+                                    ),
+                                    padding:EdgeInsets.symmetric(horizontal: 150 , vertical: 10)
+                                ),
+
+                                child: Text(
+                                  'Booking',
+                                  style: TextStyle(
+                                    color: Colors.white, // สีข้อความ
+                                    fontSize: 22,
+
                                   ),
-                                  padding:EdgeInsets.symmetric(horizontal: 150 , vertical: 10)
-                              ),
-
-                              child: Text(
-                                'Booking',
-                                style: TextStyle(
-                                  color: Colors.white, // สีข้อความ
-                                  fontSize: 22,
-
                                 ),
                               ),
-                            ),
-                        )
+                            )
                         )
                       ],
                     )

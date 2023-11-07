@@ -121,64 +121,64 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
         filename: 'image.jpg',
       ),
     );
-  try {
-    final response = await request.send();
-    if (response.statusCode == 200) {
-      print('อัปโหลดภาพสำเร็จ');
+    try {
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('อัปโหลดภาพสำเร็จ');
 
-      // ดำเนินการตรวจสอบ recognized_data ที่ถูกส่งกลับจากเซิร์ฟเวอร์
-      final responseJson = await response.stream.bytesToString();
-      print('รับข้อมูลจากเซิร์ฟเวอร์: $responseJson');
+        // ดำเนินการตรวจสอบ recognized_data ที่ถูกส่งกลับจากเซิร์ฟเวอร์
+        final responseJson = await response.stream.bytesToString();
+        print('รับข้อมูลจากเซิร์ฟเวอร์: $responseJson');
 
-      // แปลง JSON ไปเป็น Map
-      Map<String, dynamic> data = json.decode(responseJson);
+        // แปลง JSON ไปเป็น Map
+        Map<String, dynamic> data = json.decode(responseJson);
 
-      // อ่านชื่อจาก Map
-      String recognizedName = data["name"];
+        // อ่านชื่อจาก Map
+        String recognizedName = data["name"];
 
-      // อัปเดตค่า name ด้วยชื่อที่ได้รับจากเซิร์ฟเวอร์
-      setState(() {
-        name = recognizedName;
-        // detectedName = recognizedName;
-        isLoading = true;
-        isIdentityVerified = true;
-      });
-
-      print("newName1");
-      print(newName);
-      if (newName == true) {
+        // อัปเดตค่า name ด้วยชื่อที่ได้รับจากเซิร์ฟเวอร์
         setState(() {
           name = recognizedName;
-          newName = true;
+          // detectedName = recognizedName;
+          isLoading = true;
+          isIdentityVerified = true;
         });
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FoundUserPage(name: recognizedName),
-          ),
-        );
-      } //ถ้าไม่ค่า name เหมือนเดิมให้ส่งค่า newName = true
-      else if (recognizedName == name) {
-        print("newName2");
+        print("newName1");
         print(newName);
-        setState(() {
-          newName = true;
-        });
-      }
+        if (newName == true) {
+          setState(() {
+            name = recognizedName;
+            newName = true;
+          });
 
-      else {
-        setState(() {
-          newName = false;
-        });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FoundUserPage(name: recognizedName),
+            ),
+          );
+        } //ถ้าไม่ค่า name เหมือนเดิมให้ส่งค่า newName = true
+        else if (recognizedName == name) {
+          print("newName2");
+          print(newName);
+          setState(() {
+            newName = true;
+          });
+        }
+
+        else {
+          setState(() {
+            newName = false;
+          });
+        }
       }
+    }catch (e) {
+      setState(() {
+        newName = true;
+
+      });
     }
-  }catch (e) {
-    setState(() {
-      newName = true;
-
-    });
-  }
 
 
 
@@ -287,34 +287,34 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
             Transform.translate(
               offset: Offset(0.0, -200.0),
               child: Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  margin: EdgeInsets.only(top:0.0),
-                  child: ElevatedButton(
-                    onPressed:(){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>AuthorizePage())
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    margin: EdgeInsets.only(top:0.0),
+                    child: ElevatedButton(
+                      onPressed:(){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=>AuthorizePage())
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
 
 
-                       shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(30.0)
-                       ),
-                      padding:EdgeInsets.symmetric(horizontal: 100 , vertical: 10)
-                      ,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)
+                        ),
+                        padding:EdgeInsets.symmetric(horizontal: 100 , vertical: 10)
+                        ,
+                      ),
+                      child: Text("Retry",style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 26,
+
+                      ),),
+
                     ),
-                    child: Text("Retry",style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 26,
-
-                    ),),
-
-                  ),
-                )
+                  )
               ),
             )
 
