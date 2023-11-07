@@ -87,14 +87,14 @@ class _ReservationWidgetState extends State<ReservationWidget> {
   // }
   //try to pu t name to database
   void sendReservationData() async {
-    final String url = 'http://10.0.2.2:3000/reserveroom/9'; // แก้ไข URL ตามที่คุณต้องการ
+    final String url = 'http://10.0.2.2:3000/reserveroom/5'; // แก้ไข URL ตามที่คุณต้องการ
 
     final Map<String, dynamic> reservationData = {
       "start_time": _selectedValue, // แก้ไขค่าตามที่คุณต้องการ
       "end_time": _selectedEndTimeValue, // แก้ไขค่าตามที่คุณต้องการ
       "date_reservation": dateInput.text, // แก้ไขค่าตามที่คุณต้องการ
-      "update_reservlog": "2020-21-23", // แก้ไขค่าตามที่คุณต้องการ
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNCwidXNlcm5hbWUiOiJKb2hueTUiLCJpYXQiOjE2OTkzMzM3OTEsImV4cCI6MTY5OTM3Njk5MX0.iGzl0ZqmZ8adFCF4fRdP--jtatpnCpjK22yipAx_vNg", // แทนที่ด้วย JWT token ของคุณ
+      "update_reservlog": "2020-22-23", // แก้ไขค่าตามที่คุณต้องการ
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwidXNlcm5hbWUiOiJUaXdhdFBvc3JpIiwiaWF0IjoxNjk5MzQ0ODE0LCJleHAiOjE2OTkzODgwMTR9.SQmVwCf82x7nW20T_0LqU63SdgKGghq6Jsifts5yKLg", // แทนที่ด้วย JWT token ของคุณ
     };
 
     final response = await http.post(

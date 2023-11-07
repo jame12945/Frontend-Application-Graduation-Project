@@ -1,8 +1,12 @@
 import 'package:bookingapp/views/ProofPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class FoundUserPage extends StatefulWidget {
   final String name;
+
 
 
   FoundUserPage({required this.name});
@@ -12,6 +16,40 @@ class FoundUserPage extends StatefulWidget {
 }
 
 class _FoundUserPageState extends State<FoundUserPage> {
+  String startTime = '';
+  String endTime = '';
+  String dateReserve = '';
+  int attendanceID = 0;
+
+  Future<void> fetchStartTime() async {
+    final token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwidXNlcm5hbWUiOiJUaXdhdFBvc3JpIiwiaWF0IjoxNjk5MzQ0ODE0LCJleHAiOjE2OTkzODgwMTR9.SQmVwCf82x7nW20T_0LqU63SdgKGghq6Jsifts5yKLg'; // เปลี่ยน YOUR_TOKEN_HERE เป็น token ของคุณ
+    final url = Uri.parse('http://10.0.2.2:3000/getreservations/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwidXNlcm5hbWUiOiJUaXdhdFBvc3JpIiwiaWF0IjoxNjk5MzQ0ODE0LCJleHAiOjE2OTkzODgwMTR9.SQmVwCf82x7nW20T_0LqU63SdgKGghq6Jsifts5yKLg'); // เปลี่ยน YOUR_API_URL_HERE เป็น URL ของ API ของคุณ
+
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final reservations = jsonData['reservations'];
+      if (reservations.isNotEmpty) {
+        String fullTime = reservations[0]['start_time'];
+        startTime = fullTime.substring(0, 5); // เรียกใช้งานข้อมูล start_time จาก API
+        String fullEndTime = reservations[0]['end_time'];
+        endTime = fullEndTime.substring(0,5);
+        String DateReserve = reservations[0]['date_reservation'];
+        DateTime dateReserveDateTime = DateTime.parse(DateReserve);
+        DateTime adjustedDateReserve = dateReserveDateTime.add(Duration(hours: 7)); // 7 ชั่วโมง เพื่อปรับเวลา
+        String formattedDate = adjustedDateReserve.toLocal().toString(); // แปลงกลับเป็น local time
+        dateReserve = formattedDate.substring(0, 10);
+        attendanceID = reservations[0]['user_id']; // แปลงค่า int เป็น String
+
+        setState(() {}); // รีเรนเดอร์หน้าหลังจากที่ได้ข้อมูล
+      }
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    fetchStartTime();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +155,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 Transform.translate(
                                   offset: Offset(-166,-25),
                                   child: Text(
-                                    "10",
+                                    attendanceID.toString(),
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.brown,
@@ -145,7 +183,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 Transform.translate(
                                   offset: Offset(104,-81),
                                   child: Text(
-                                    "19.00-20.00",
+                                    startTime + '-'+endTime,
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.brown,
@@ -201,7 +239,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 Transform.translate(
                                   offset: Offset(100,-81),
                                   child: Text(
-                                    "2023-11-16",
+                                    dateReserve,
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.brown,
