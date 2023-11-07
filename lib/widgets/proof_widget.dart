@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class ProofWidget extends StatefulWidget{
   final String name;
-  ProofWidget({required this.name});
+  final int reservationID;
+  ProofWidget({required this.name,required this.reservationID});
 
 
   @override
@@ -105,7 +106,7 @@ class  _ProofWidgetState extends State<ProofWidget>{
                       ),
                     ),
                     Text(
-                      '    1',
+                      '    ' + widget.reservationID.toString(),
                       style: TextStyle(
                           fontSize: 26,
                           color: Colors.green

@@ -20,6 +20,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
   String endTime = '';
   String dateReserve = '';
   int attendanceID = 0;
+  int reservationID = 0;
 
   Future<void> fetchStartTime() async {
     final token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwidXNlcm5hbWUiOiJUaXdhdFBvc3JpIiwiaWF0IjoxNjk5MzQ0ODE0LCJleHAiOjE2OTkzODgwMTR9.SQmVwCf82x7nW20T_0LqU63SdgKGghq6Jsifts5yKLg'; // เปลี่ยน YOUR_TOKEN_HERE เป็น token ของคุณ
@@ -30,6 +31,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
       final jsonData = json.decode(response.body);
       final reservations = jsonData['reservations'];
       if (reservations.isNotEmpty) {
+
         String fullTime = reservations[0]['start_time'];
         startTime = fullTime.substring(0, 5); // เรียกใช้งานข้อมูล start_time จาก API
         String fullEndTime = reservations[0]['end_time'];
@@ -40,11 +42,13 @@ class _FoundUserPageState extends State<FoundUserPage> {
         String formattedDate = adjustedDateReserve.toLocal().toString(); // แปลงกลับเป็น local time
         dateReserve = formattedDate.substring(0, 10);
         attendanceID = reservations[0]['user_id']; // แปลงค่า int เป็น String
-
+        reservationID = reservations[0]['reservation_id'];
         setState(() {}); // รีเรนเดอร์หน้าหลังจากที่ได้ข้อมูล
       }
     }
   }
+
+
   @override
   void initState() {
     super.initState();
@@ -253,7 +257,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                   child: ElevatedButton(
                                       onPressed: (){
                                         Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (context) => ProofPage(name: widget.name),
+                                            builder: (context) => ProofPage(name: widget.name,reservationID:reservationID),
                                         ));
                                       },
                                       style: ElevatedButton.styleFrom(

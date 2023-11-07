@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 class  ProofPage extends StatelessWidget{
 
   final String name;
-  ProofPage({required this.name});  @override
+  final int reservationID;
+  ProofPage({required this.name,required this.reservationID});  @override
   Widget build (BuildContext context){
     return Scaffold(
-       body: ProofWidget(name: name)
+       body: ProofWidget(name: name, reservationID: reservationID,)
     );
   }
 }
