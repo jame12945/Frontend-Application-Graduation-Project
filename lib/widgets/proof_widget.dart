@@ -4,8 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class ProofWidget extends StatefulWidget{
   final String name;
+  final String startTime;
+  final String endTime;
+  final String dateReserve;
   final int reservationID;
-  ProofWidget({required this.name,required this.reservationID});
+  ProofWidget({
+    required this.name,
+    required this.startTime,
+    required this.endTime,
+    required this.dateReserve,
+    required this.reservationID,
+});
 
 
   @override
@@ -14,6 +23,7 @@ class ProofWidget extends StatefulWidget{
 }
 class  _ProofWidgetState extends State<ProofWidget>{
   Widget build (BuildContext context){
+
     return Scaffold(
       body: SingleChildScrollView(
 

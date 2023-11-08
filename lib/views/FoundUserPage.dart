@@ -23,27 +23,29 @@ class _FoundUserPageState extends State<FoundUserPage> {
   int reservationID = 0;
 
   Future<void> fetchStartTime() async {
-    final token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwidXNlcm5hbWUiOiJUaXdhdFBvc3JpIiwiaWF0IjoxNjk5MzQ0ODE0LCJleHAiOjE2OTkzODgwMTR9.SQmVwCf82x7nW20T_0LqU63SdgKGghq6Jsifts5yKLg'; // เปลี่ยน YOUR_TOKEN_HERE เป็น token ของคุณ
-    final url = Uri.parse('http://10.0.2.2:3000/getreservations/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNSwidXNlcm5hbWUiOiJUaXdhdFBvc3JpIiwiaWF0IjoxNjk5MzQ0ODE0LCJleHAiOjE2OTkzODgwMTR9.SQmVwCf82x7nW20T_0LqU63SdgKGghq6Jsifts5yKLg'); // เปลี่ยน YOUR_API_URL_HERE เป็น URL ของ API ของคุณ
+
+    final url = Uri.parse('http://10.0.2.2:3000/getreservations/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNiwidXNlcm5hbWUiOiJKb2hueURvaGFuIiwiaWF0IjoxNjk5NDE1MTYzLCJleHAiOjE2OTk0NTgzNjN9.Ea2WohOSv7uVcygn0-JU4zhbVCfkIKQZ5FUh6druYYg'); // เปลี่ยน YOUR_API_URL_HERE เป็น URL ของ API ของคุณ
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       final reservations = jsonData['reservations'];
-      if (reservations.isNotEmpty) {
+      if (reservations != null && reservations.isNotEmpty) {
+        final latestReservation = reservations.last;
 
-        String fullTime = reservations[0]['start_time'];
-        startTime = fullTime.substring(0, 5); // เรียกใช้งานข้อมูล start_time จาก API
-        String fullEndTime = reservations[0]['end_time'];
-        endTime = fullEndTime.substring(0,5);
-        String DateReserve = reservations[0]['date_reservation'];
-        DateTime dateReserveDateTime = DateTime.parse(DateReserve);
-        DateTime adjustedDateReserve = dateReserveDateTime.add(Duration(hours: 7)); // 7 ชั่วโมง เพื่อปรับเวลา
-        String formattedDate = adjustedDateReserve.toLocal().toString(); // แปลงกลับเป็น local time
-        dateReserve = formattedDate.substring(0, 10);
-        attendanceID = reservations[0]['user_id']; // แปลงค่า int เป็น String
-        reservationID = reservations[0]['reservation_id'];
-        setState(() {}); // รีเรนเดอร์หน้าหลังจากที่ได้ข้อมูล
+        setState(() {
+          String startFullTime = latestReservation['start_time'];
+          startTime = startFullTime.substring(0,5);
+          String endFullTime = latestReservation['end_time'];
+          endTime = endFullTime.substring(0,5);
+          String DateReserve = latestReservation['date_reservation'];
+          DateTime dateReserveDateTime = DateTime.parse(DateReserve);
+          DateTime adjustedDateReserve = dateReserveDateTime.add(Duration(hours: 7));
+          String formattedDate = adjustedDateReserve.toLocal().toString();
+          dateReserve = formattedDate.substring(0, 10);
+          attendanceID = latestReservation['user_id'];
+          reservationID = latestReservation['reservation_id'];
+        });
       }
     }
   }
@@ -255,10 +257,25 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                 Transform.translate(
                                   offset: Offset(0, -10),
                                   child: ElevatedButton(
-                                      onPressed: (){
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (context) => ProofPage(name: widget.name,reservationID:reservationID),
+                                      onPressed: () async {
+                                        await fetchStartTime();
+                                        final result = await Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => ProofPage(name: widget.name, reservationID: reservationID),
                                         ));
+
+                                        if (result != null && result is Map<String, dynamic>) {
+                                          setState(() {
+                                            startTime = result['startTime'];
+                                            endTime = result['endTime'];
+                                            dateReserve = result['dateReserve'];
+                                            reservationID = result['reservationID'];
+                                          });
+                                          print('Received data from ProofPage:');
+                                          print('startTime: $startTime');
+                                          print('endTime: $endTime');
+                                          print('dateReserve: $dateReserve');
+                                          print('reservationID: $reservationID');
+                                        }
                                       },
                                       style: ElevatedButton.styleFrom(
                                            backgroundColor: Colors.green,
