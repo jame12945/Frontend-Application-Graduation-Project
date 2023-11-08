@@ -24,7 +24,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
 
   Future<void> fetchStartTime() async {
 
-    final url = Uri.parse('http://10.0.2.2:3000/getreservations/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozNiwidXNlcm5hbWUiOiJKb2hueURvaGFuIiwiaWF0IjoxNjk5NDE1MTYzLCJleHAiOjE2OTk0NTgzNjN9.Ea2WohOSv7uVcygn0-JU4zhbVCfkIKQZ5FUh6druYYg'); // เปลี่ยน YOUR_API_URL_HERE เป็น URL ของ API ของคุณ
+    final url = Uri.parse('http://10.0.2.2:3000/getreservations/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwidXNlcm5hbWUiOiJKb2hueURvaGFuNCIsImlhdCI6MTY5OTQxODMwOCwiZXhwIjoxNjk5NDYxNTA4fQ.MVCBDqUMfXCrS157vLDAQRkCOlq8jqe-0MhPQltDa9k'); // เปลี่ยน YOUR_API_URL_HERE เป็น URL ของ API ของคุณ
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -270,11 +270,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                             dateReserve = result['dateReserve'];
                                             reservationID = result['reservationID'];
                                           });
-                                          print('Received data from ProofPage:');
-                                          print('startTime: $startTime');
-                                          print('endTime: $endTime');
-                                          print('dateReserve: $dateReserve');
-                                          print('reservationID: $reservationID');
+
                                         }
                                       },
                                       style: ElevatedButton.styleFrom(

@@ -16,7 +16,8 @@ class  ProofPage extends StatelessWidget{
          reservationID: reservationID,
          startTime: startTime,
          endTime: endTime,
-         dateReserve: dateReserve,)
+         dateReserve: dateReserve,
+       )
     );
   }
 }
