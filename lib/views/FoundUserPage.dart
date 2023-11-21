@@ -24,7 +24,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
 
   Future<void> fetchStartTime() async {
 
-    final url = Uri.parse('http://10.0.2.2:3000/getreservations/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwidXNlcm5hbWUiOiJUaXdhdCBQb3NyaSIsImlhdCI6MTcwMDQ1NjY0NiwiZXhwIjoxNzAwNDk5ODQ2fQ.XZrcHpyiJhhLuDuyIL1wvPm7Kp2pCAzrAycGKxyac2Q'); // เปลี่ยน YOUR_API_URL_HERE เป็น URL ของ API ของคุณ
+    final url = Uri.parse('http://10.0.2.2:3000/getLastreservations');
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
