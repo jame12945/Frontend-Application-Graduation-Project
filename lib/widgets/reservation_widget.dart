@@ -112,14 +112,14 @@ class _ReservationWidgetState extends State<ReservationWidget> {
   }
 
   void sendReservationData() async {
-    final String url = 'http://10.0.2.2:3000/reserveroom/7'; // แก้ไข URL ตามที่คุณต้องการ
+    final String url = 'http://10.0.2.2:3000/appreserveroom/7'; // แก้ไข URL ตามที่คุณต้องการ
 
     final Map<String, dynamic> reservationData = {
       "start_time": _selectedValue, // แก้ไขค่าตามที่คุณต้องการ
       "end_time": _selectedEndTimeValue, // แก้ไขค่าตามที่คุณต้องการ
       "date_reservation": dateInput.text, // แก้ไขค่าตามที่คุณต้องการ
       "update_reservlog": "2020-22-23", // แก้ไขค่าตามที่คุณต้องการ
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwidXNlcm5hbWUiOiJKb2hueURvaGFuNCIsImlhdCI6MTY5OTQxODMwOCwiZXhwIjoxNjk5NDYxNTA4fQ.MVCBDqUMfXCrS157vLDAQRkCOlq8jqe-0MhPQltDa9k", // แทนที่ด้วย JWT token ของคุณ
+
     };
 
     final response = await http.post(
@@ -337,7 +337,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                       child: Row(
                                         children: [
                                           Transform.translate(
-                                             offset: Offset(10, 0),
+                                              offset: Offset(10, 0),
                                               child: Icon(Icons.access_time,
                                                 size: 35,)
                                           ),
@@ -539,7 +539,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
                               child:ElevatedButton(
                                 onPressed: () {
-                                   sendReservationData();
+                                  sendReservationData();
                                   var data = {
                                     "pname":_nameController.text,
                                     "pphone": _phoneController.text,

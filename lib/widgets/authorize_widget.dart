@@ -110,9 +110,11 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
     });
   }
 
+
   void uploadImage(File imageFile) async {
-    final url = Uri.parse('http://10.0.2.2:8000/recognize-face/');
-    final request = http.MultipartRequest('POST', url);
+    final modelUrl = Uri.parse('http://10.0.2.2:8000/recognize-face/');
+
+    final request = http.MultipartRequest('POST', modelUrl);
     request.files.add(
       http.MultipartFile(
         'image',
@@ -136,6 +138,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
         // อ่านชื่อจาก Map
         String recognizedName = data["name"];
 
+
         // อัปเดตค่า name ด้วยชื่อที่ได้รับจากเซิร์ฟเวอร์
         setState(() {
           name = recognizedName;
@@ -144,13 +147,14 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
           isIdentityVerified = true;
         });
 
-        print("newName1");
+
         print(newName);
         if (newName == true) {
           setState(() {
             name = recognizedName;
             newName = true;
           });
+          await sendNameToServer(name);
 
           Navigator.push(
             context,
@@ -160,8 +164,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
           );
         } //ถ้าไม่ค่า name เหมือนเดิมให้ส่งค่า newName = true
         else if (recognizedName == name) {
-          print("newName2");
-          print(newName);
+
           setState(() {
             newName = true;
           });
@@ -180,13 +183,31 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
       });
     }
 
-
-
-    //  else {
-    //   print('เกิดข้อผิดพลาดในการอัปโหลดภาพ: ${response.reasonPhrase}');
-    // }
   }
+  Future<void> sendNameToServer(String name) async {
+    final nodeUrl = Uri.parse('http://10.0.2.2:3000/faceRecognition');
+    final Map<String, dynamic> nameData = {
+      "nameFromFaceRecognition": name,
+    };
+    try {
+      final response = await http.post(
+        nodeUrl,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(nameData),
+      );
 
+      if (response.statusCode == 200) {
+        print('ส่งค่า name ไปยังเซิร์ฟเวอร์สำเร็จ');
+        print('Response from server: ${response.body}');
+      } else {
+        print('ไม่สามารถส่งค่า name ไปยังเซิร์ฟเวอร์ รหัสสถานะ: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('เกิดข้อผิดพลาดในการเชื่อมต่อ: $e');
+    }
+  }
 
 
   @override
