@@ -1,4 +1,4 @@
-# frontend - Application -> Room Reservation System WIth Face Recognition (ML Project)      
+# Frontend - Application -> Room Reservation System WIth Face Recognition (ML Project)      
 
 
 A new Flutter project.
