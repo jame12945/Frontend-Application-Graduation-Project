@@ -258,25 +258,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
                   ),
                 ),
               ),
-              // Transform.translate(
-              //   offset: Offset(0,-300),
-              //   child: Text(
-              //     name,  // ใช้ตัวแปร name ที่เก็บชื่อจากเซิร์ฟเวอร์
-              //     style: TextStyle(
-              //       color: Colors.blue,
-              //       fontSize: 30,
-              //     ),
-              //   ),
-              // ),
 
-              // Transform.translate(
-              //   offset:  Offset(0.0, -900),
-              //   child: Center(
-              //     child: Image.file(
-              //       File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg'),
-              //     ),
-              //   ),
-              // ),
 
 
             ],

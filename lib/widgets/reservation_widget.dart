@@ -94,19 +94,19 @@ class _ReservationWidgetState extends State<ReservationWidget> {
   }
 
   void sendReservationData() async {
-    final String url = 'http://10.0.2.2:3000/appreserveroom/9'; // แก้ไข URL ตามที่คุณต้องการ
 
+    final nodeUrl = Uri.parse('http://10.0.2.2:3000/appreserveroom/9');
     final Map<String, dynamic> reservationData = {
       "start_time": _selectedValue, // แก้ไขค่าตามที่คุณต้องการ
       "end_time": _selectedEndTimeValue, // แก้ไขค่าตามที่คุณต้องการ
       "date_reservation": dateInput.text, // แก้ไขค่าตามที่คุณต้องการ
       "update_reservlog": "2020-10-23", // แก้ไขค่าตามที่คุณต้องการ
-      // "attendee_email":selectedEmails,
+      "attendee_email":selectedEmails,
 
     };
 
     final response = await http.post(
-      Uri.parse(url),
+      nodeUrl,
       headers: {
         'Content-Type': 'application/json',
       },
