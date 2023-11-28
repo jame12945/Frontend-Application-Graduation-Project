@@ -101,6 +101,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
       "end_time": _selectedEndTimeValue, // แก้ไขค่าตามที่คุณต้องการ
       "date_reservation": dateInput.text, // แก้ไขค่าตามที่คุณต้องการ
       "update_reservlog": "2020-10-23", // แก้ไขค่าตามที่คุณต้องการ
+      // "attendee_email":selectedEmails,
 
     };
 
@@ -122,6 +123,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
     }
 
   }
+
   Future<void> fetchEmailsFromAPI() async {
     try {
       final response = await http.get(Uri.parse('http://10.0.2.2:3000/selectAttendee'));
@@ -442,6 +444,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                                 setState(() {
                                                   selectedEmails.add(emails[index]); // เพิ่มรายชื่อ Email ที่ถูกเลือก
                                                 });
+                                                print(selectedEmails);
                                                 Navigator.of(context).pop();
                                               },
                                             );
