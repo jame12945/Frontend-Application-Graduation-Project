@@ -1,4 +1,5 @@
 import 'package:bookingapp/views/ProofPage.dart';
+import 'package:bookingapp/views/ReservationProcess_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -49,8 +50,18 @@ class _FoundUserPageState extends State<FoundUserPage> {
       }
     }
   }
-
-
+Future<Map<String,dynamic>> deleteLastReservation() async
+{
+  final url = Uri.parse('http://10.0.2.2:3000/deleteLastReservation');
+  final response = await http.delete(url);
+  if(response.statusCode== 200){
+    print('delete successful');
+    return json.decode(response.body);
+  }
+  else{
+    throw Exception('Failed to delete  reservation');
+  }
+}
   @override
   void initState() {
     super.initState();
@@ -255,7 +266,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                   ),
                                 ),
                                 Transform.translate(
-                                  offset: Offset(0, -10),
+                                  offset: Offset(0, -30),
                                   child: ElevatedButton(
                                       onPressed: () async {
                                         await fetchStartTime();
@@ -287,7 +298,30 @@ class _FoundUserPageState extends State<FoundUserPage> {
                                       ) ,
                                     ),
                                   ),
-                                )
+                                ),
+                                Transform.translate(
+                                    offset: Offset(0,-25),
+                                child: ElevatedButton(
+                                  onPressed:() async {
+                                    final deleteResult = await deleteLastReservation();
+                                    final result = await Navigator.of(context).push(
+                                        MaterialPageRoute(builder:(context) => ReservationPage(),));
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20)
+                                      ),
+                                      padding: EdgeInsets.symmetric(horizontal: 48,vertical: 7)
+
+                                  ),
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                  ),
+                                ),)
                               ],
 
                             ),

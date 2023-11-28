@@ -77,25 +77,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
     dateInput.dispose();
     super.dispose();
   }
-  // void sendMessage(String message){
-  //    print(message);
-  //
-  //    WebSocketChannel channel;
-  //    try {
-  //      channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
-  //      channel.sink.add(message);
-  //      channel.stream.listen((message) {
-  //        print(message);
-  //        channel.sink.close();
-  //
-  //      });
-  //    }
-  //    catch (e){
-  //      print(e);
-  //    }
-  //    _nameController.clear();
-  // }
-  //try to pu t name to database
+
   List<DropdownMenuItem<String?>> _buildDropdownMenuItems() {
     return _availableTimes.map((String? value) {
       return DropdownMenuItem<String?>(
@@ -118,7 +100,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
       "start_time": _selectedValue, // แก้ไขค่าตามที่คุณต้องการ
       "end_time": _selectedEndTimeValue, // แก้ไขค่าตามที่คุณต้องการ
       "date_reservation": dateInput.text, // แก้ไขค่าตามที่คุณต้องการ
-      "update_reservlog": "2020-22-23", // แก้ไขค่าตามที่คุณต้องการ
+      "update_reservlog": "2020-10-23", // แก้ไขค่าตามที่คุณต้องการ
 
     };
 
@@ -140,6 +122,24 @@ class _ReservationWidgetState extends State<ReservationWidget> {
     }
 
   }
+  Future<void> fetchEmailsFromAPI() async {
+    try {
+      final response = await http.get(Uri.parse('http://10.0.2.2:3000/selectAttendee'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        final List<String> apiEmails = List<String>.from(data['email']);
+
+        setState(() {
+          emails = apiEmails;
+        });
+      } else {
+        print('Failed to fetch emails from API');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Color customColor = Color(0xFFDAC3A6);
@@ -186,56 +186,6 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Text(
-                    //   'Name',
-                    //   style: TextStyle(fontSize: 21),
-                    // ),
-                    // SizedBox(height: 2),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 1.0),
-                    //   child: Container(
-                    //     width: MediaQuery.of(context).size.width * 0.8,
-                    //     child: TextFormField(
-                    //       controller: _nameController,
-                    //       style: TextStyle(color: Colors.brown, fontSize: 18),
-                    //       decoration: InputDecoration(hintText: 'Enter your name'),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 20),
-                    // Text(
-                    //   'Phone',
-                    //   style: TextStyle(fontSize: 21),
-                    // ),
-                    // SizedBox(height: 2),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 1.0),
-                    //   child: Container(
-                    //     width: MediaQuery.of(context).size.width * 0.8,
-                    //     child: TextFormField(
-                    //       controller: _phoneController,
-                    //       style: TextStyle(color: Colors.brown, fontSize: 18),
-                    //       decoration: InputDecoration(hintText: 'Enter your phone'),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 20),
-                    // Text(
-                    //   'Email',
-                    //   style: TextStyle(fontSize: 21),
-                    // ),
-                    // SizedBox(height: 2),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 1.0),
-                    //   child: Container(
-                    //     width: MediaQuery.of(context).size.width * 0.8,
-                    //     child: TextFormField(
-                    //       controller: _emailController,
-                    //       style: TextStyle(color: Colors.brown, fontSize: 18),
-                    //       decoration: InputDecoration(hintText: 'Enter your email'),
-                    //     ),
-                    //   ),
-                    // ),
 
                     SizedBox(height: 20),
                     Text('Date',style: TextStyle(fontSize: 21),),
@@ -467,7 +417,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                           width: 80,
                           height: 80,
                           child: IconButton(
-                            onPressed: () {
+                            onPressed: () async{
+                              await fetchEmailsFromAPI();
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
