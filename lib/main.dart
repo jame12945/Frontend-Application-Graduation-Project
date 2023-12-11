@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(textTheme),
       ),
-      home: DetailPage(), // Pass the context here
+      home: DetailPage(),
       routes: {
         '/homePage': (context) => HomePage(),
         '/loginPage': (context) => LoginPage(),

@@ -9,6 +9,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
+import 'package:permission_handler/permission_handler.dart';
+
 
 
 class AuthorizeWidget extends StatefulWidget {
@@ -36,29 +38,47 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
   }
 
   void initCamera() async {
-    final cameras = await availableCameras();
-    final camera = cameras.first;
-    controller = CameraController(camera, ResolutionPreset.medium);
+    try{
+      await requestPermission();
+      final cameras = await availableCameras();
+      final camera = cameras.first;
+      controller = CameraController(camera, ResolutionPreset.medium);
 
-    // Ensure the controller is initialized
-    await controller?.initialize();
+      // Ensure the controller is initialized
+      await controller?.initialize();
 
-    if (mounted) {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
+
+      // เรียกใช้ captureAndSaveImage เมื่อกล้องถูกเริ่มใช้งาน
+      final path = '/storage/emulated/0/Download';
+      Future.delayed(Duration(seconds: 2),(){
+        captureAndSaveImage();
+        uploadImage(File('$path/image.jpg'));
+      });
+    }
+    catch(e){
+      print("Error initializing camera: $e");
     }
 
-    // เรียกใช้ captureAndSaveImage เมื่อกล้องถูกเริ่มใช้งาน
-    final path = '/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic';
-    Future.delayed(Duration(seconds: 2),(){
-      captureAndSaveImage();
-      uploadImage(File('$path/image.jpg'));
-    });
 
   }
+  Future<void> requestPermission() async {
+    var status = await Permission.storage.request();
+    if (status.isGranted) {
+      print("Storage permission granted");
+      // ทำงานที่ต้องการทำหลังจากได้รับสิทธิ์
+    } else {
+      print("Storage permission denied");
+      // จัดการกรณีที่ไม่ได้รับสิทธิ์
+    }
+  }
+
   void captureAndSaveImage() async {
     if (controller != null && controller!.value.isInitialized) {
       try {
-        final path = '/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic';
+        final path = '/storage/emulated/0/Download';
         final directory = Directory(path);
         if (!directory.existsSync()) {
           directory.createSync(recursive: true);
@@ -71,7 +91,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
           final saveFile = File('$path/image.jpg');
           await saveFile.writeAsBytes(imageBytes);
           print("Image saved successfully");
-          final imageFile = File('/storage/emulated/0/Android/data/com.example.bookingapp/files/GetPic/image.jpg');
+          final imageFile = File('/storage/emulated/0/Download/image.jpg');
           if (imageFile.existsSync()) {
             print('Have Picture In Path');
 

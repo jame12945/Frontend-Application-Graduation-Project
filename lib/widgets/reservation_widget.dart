@@ -97,10 +97,10 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
     final nodeUrl = Uri.parse('http://10.0.2.2:3000/appreserveroom/9');
     final Map<String, dynamic> reservationData = {
-      "start_time": _selectedValue, // แก้ไขค่าตามที่คุณต้องการ
-      "end_time": _selectedEndTimeValue, // แก้ไขค่าตามที่คุณต้องการ
-      "date_reservation": dateInput.text, // แก้ไขค่าตามที่คุณต้องการ
-      "update_reservlog": "2020-10-23", // แก้ไขค่าตามที่คุณต้องการ
+      "start_time": _selectedValue,
+      "end_time": _selectedEndTimeValue,
+      "date_reservation": dateInput.text,
+      "update_reservlog": "2020-10-23",
       "attendee_email":selectedEmails,
 
     };

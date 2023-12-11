@@ -5,7 +5,8 @@ class  ProofPage extends StatelessWidget{
 
   final String name;
   final int reservationID;
-  ProofPage({required this.name,required this.reservationID});  @override
+  ProofPage({required this.name,required this.reservationID});
+  @override
   Widget build (BuildContext context){
     String startTime = ''; // ดึงค่า startTime จาก FoundUserPage
     String endTime = ''; // ดึงค่า endTime จาก FoundUserPage

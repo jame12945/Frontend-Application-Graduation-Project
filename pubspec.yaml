@@ -31,13 +31,13 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.17.0
-  camera: ^0.10.5+5
+  camera:
   path_provider: ^2.0.8
   http: ^0.13.3
   face_detection:
   web_socket_channel: ^2.0.0
   flutter_easyloading:
-
+  permission_handler:
 
 
 
