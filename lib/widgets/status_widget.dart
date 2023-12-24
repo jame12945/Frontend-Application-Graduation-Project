@@ -12,7 +12,7 @@ Widget statusWidget(){
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 0.0),
     child: SingleChildScrollView(
-     // physics: NeverScrollableScrollPhysics(),
+    physics: NeverScrollableScrollPhysics(),
       child: Stack(
         children: [
           Container(
@@ -188,31 +188,95 @@ Widget statusWidget(){
             ],
           ),
           Transform.translate(
-            offset: Offset(250, 900),
-            child: Builder(
-              builder: (context) => ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => DetailPage(),
-                  ));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(78, 175, 83, 1.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40.0),
+            offset: Offset(260, 900),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Builder(
+                builder: (context) => ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DetailPage(),
+                    ));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(78, 175, 83, 1.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40.0),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 12),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 80, vertical: 12),
-                ),
-                child: Text(
-                  'See Detail',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
+                  child: Text(
+                    'See Detail',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                    ),
                   ),
                 ),
               ),
             ),
-          )
+          ),
+
+          Transform.translate(
+            offset: Offset(100,1000),
+            child: Column(
+              children: [
+                Transform.translate(
+                  offset: Offset(-100, 0),
+                  child: Container(
+                  width: 580,
+                  height: 1,
+                  color: Colors.white70,
+                                ),
+                ),
+                Transform.translate(
+                  offset: Offset(-120, 40),
+                  child: Container(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text('18:00 '+'-'+' 19.00' +' Host Name',
+                        style:TextStyle(
+                          fontSize: 24,
+                          color: Colors.white70
+                        ) ,),
+                    ),
+                  ),
+                ),
+                Transform.translate(
+                  offset: Offset(-120, 40),
+                  child: Container(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text( '19:00 '+'-'+' 20.00' +' Host Name',
+                        style:TextStyle(
+                            fontSize: 24,
+                            color: Colors.white70
+                        ) ,),
+                    ),
+                  ),
+                ),
+                Transform.translate(
+                  offset: Offset(-100, 80),
+                  child: Container(
+                    width: 580,
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                ),
+                Transform.translate(
+                  offset: Offset(-100, 100),
+                  child: Text(
+                     'Show All Bookings',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white
+                    ),
+                  )
+                ),
+              ]
+            ),
+          ),
         ],
       ),
     ),
