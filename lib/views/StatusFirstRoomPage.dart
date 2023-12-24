@@ -7,17 +7,7 @@ class StatusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:Container(
-          width: Get.width,
-          height: Get.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              statusWidget()
-
-            ],
-          ),
-        )
+        body:statusWidget()
     );
   }
 }
