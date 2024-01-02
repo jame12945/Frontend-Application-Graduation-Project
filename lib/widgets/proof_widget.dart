@@ -1,3 +1,4 @@
+import 'package:bookingapp/views/StatusFirstRoomPage.dart';
 import 'package:bookingapp/views/detail_page.dart';
 import 'package:bookingapp/widgets/detail_widget.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +133,7 @@ class  _ProofWidgetState extends State<ProofWidget>{
                 child: ElevatedButton(
                   onPressed: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DetailPage(),
+                      builder: (context) => StatusPage(),
                     ));
                   },
                   style: ElevatedButton.styleFrom(
