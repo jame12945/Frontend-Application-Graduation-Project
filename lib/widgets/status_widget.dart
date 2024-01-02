@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../views/detail_page.dart';
+import 'dart:async';
 class statusWidget extends StatefulWidget {
   @override
   _statusWidgetWidgetState createState() => _statusWidgetWidgetState();
@@ -15,6 +16,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
   String? formattedCurrentTime;
   bool x = false;
   String y = '1';
+  late Timer _timer;
   Future<Map<String, dynamic>> fetchTimeSlots() async {
     try {
       final response = await http.get(Uri.parse('http://10.0.2.2:3000/selectStatusTime'));
@@ -22,21 +24,18 @@ class _statusWidgetWidgetState extends State<statusWidget>{
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['status'] == 'ok') {
-
-           timeSlots = data['message'];
-           formattedCurrentTime = data['time'];
-           setState(() {
-             x = true;
-           });
-
+          timeSlots = data['message'];
+          formattedCurrentTime = data['time'];
+          // ให้ x มีค่าเท่ากับค่าที่มีอยู่จริงใน response
+          x = data['message']?.isNotEmpty == true;
           return {
             'status': 'ok',
             'message': 'Time slots retrieved successfully',
             'timeSlots': timeSlots,
             'formattedCurrentTime': formattedCurrentTime,
-
           };
         } else {
+          // ให้ x เป็น false เมื่อ status เป็น error
           setState(() {
             x = false;
           });
@@ -46,6 +45,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
           };
         }
       } else {
+        // ให้ x เป็น false เมื่อไม่ได้รับ response 200
         setState(() {
           x = false;
         });
@@ -54,10 +54,9 @@ class _statusWidgetWidgetState extends State<statusWidget>{
           'message': 'Failed to retrieve data from the server',
         };
       }
+
     } catch (error) {
-      setState(() {
-        x = false;
-      });
+
       return {
         'status': 'error',
         'message': 'An error occurred: $error',
@@ -65,16 +64,25 @@ class _statusWidgetWidgetState extends State<statusWidget>{
     }
   }
   @override
+  @override
   void initState() {
     super.initState();
-    setState(() {
-      x = false;
-    });
     fetchTimeSlots().then((result) {
       print(result);
     });
+
+    _timer = Timer.periodic(Duration(minutes: 1), (timer) {
+      fetchTimeSlots().then((result) {
+        setState(() {});
+      });
+    });
   }
 
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
   Widget build(BuildContext context){
     DateTime now = DateTime.now();
     String formatteTime = DateFormat('HH:mm ').format(now);
@@ -93,11 +101,8 @@ class _statusWidgetWidgetState extends State<statusWidget>{
             startTime = '${startParts[0]}:${startParts[1]}';
             endTime = '${endParts[0]}:${endParts[1]}';
           }
-          setState(() {
-            x = true;
-          });
-          return
-            Text(
+         // x= true;
+          return Text(
             '$startTime - $endTime',
             style: TextStyle(
               color: Colors.white,
@@ -108,9 +113,9 @@ class _statusWidgetWidgetState extends State<statusWidget>{
         }
       }
 
-      setState(() {
-        x = false;
-      });
+
+      // x = false;
+
       return Text(
         'No Booking',
         style: TextStyle(
@@ -120,6 +125,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
         ),
       );
     }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0),
       child: SingleChildScrollView(
@@ -134,7 +140,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: x ? [Colors.black, Colors.black, Colors.red, Colors.red, Colors.red]
-                            : [Colors.black, Colors.black, Colors.green, Colors.green, Colors.green],
+                      : [Colors.black, Colors.black, Colors.green, Colors.green, Colors.green],
                   stops: [0.0, 0.15, 0.84, 0.75, 1.0],
                 ),
               ),
@@ -244,14 +250,14 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                   child: Stack(
                     children: [
                       Container(
-                        width: 300,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius:BorderRadius.circular(11.0),
-                          color: x
-                               ? Colors.red.withOpacity(0.85)
-                               : Color.fromRGBO(78, 175, 83, 1.0).withOpacity(0.85),
-                        ),
+                          width: 300,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius:BorderRadius.circular(11.0),
+                            color: x
+                                ? Colors.red.withOpacity(0.85)
+                                : Color.fromRGBO(78, 175, 83, 1.0).withOpacity(0.85),
+                          ),
 
 
                           child: x
@@ -328,7 +334,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: x ?Colors.red.withOpacity(0.85)
-                                         :Color.fromRGBO(78, 175, 83, 1.0),
+                          :Color.fromRGBO(78, 175, 83, 1.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40.0),
                       ),
@@ -412,4 +418,3 @@ class _statusWidgetWidgetState extends State<statusWidget>{
     );
   }
 }
-
