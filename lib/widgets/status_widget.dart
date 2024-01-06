@@ -13,6 +13,8 @@ class statusWidget extends StatefulWidget {
 
 class _statusWidgetWidgetState extends State<statusWidget>{
   List<dynamic>? timeSlots;
+  List<dynamic>? timeNextSlots;
+  List<Map<String, dynamic>>? bookings;
   String? formattedCurrentTime;
   bool x = false;
   String y = '1';
@@ -63,6 +65,43 @@ class _statusWidgetWidgetState extends State<statusWidget>{
       };
     }
   }
+
+  Future<List<Map<String, dynamic>>> getSelectNextBooking() async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:3000/selectNextBooking'),
+    );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+
+      if (data['status'] == 'ok') {
+        List<Map<String, dynamic>> bookings = [];
+
+        for (var booking in data['message']) {
+          Map<String, dynamic> userDetails = booking['user_details'];
+
+          bookings.add({
+            'start_time': booking['start_time'],
+            'end_time': booking['end_time'],
+            'user_id': booking['user_id'],
+            'user_fname': userDetails['user_fname'],
+            'user_lname': userDetails['user_lname'],
+
+          }); print(bookings);
+        }
+
+        return bookings;
+      } else {
+        throw Exception('Error: ${data['message']}');
+      }
+    } else {
+      throw Exception('Failed to load booking information');
+    }
+  }
+
   @override
   @override
   void initState() {
@@ -70,7 +109,10 @@ class _statusWidgetWidgetState extends State<statusWidget>{
     fetchTimeSlots().then((result) {
       print(result);
     });
-
+    getSelectNextBooking().then((result) {
+      // เก็บข้อมูลจาก selectNextBooking เพื่อนำไปใช้ในส่วนอื่น ๆ
+      bookings = result;
+    });
     _timer = Timer.periodic(Duration(minutes: 1), (timer) {
       fetchTimeSlots().then((result) {
         setState(() {});
@@ -125,6 +167,56 @@ class _statusWidgetWidgetState extends State<statusWidget>{
         ),
       );
     }
+    Widget buildNextStatusInfo() {
+      if (bookings?.isNotEmpty == true) {
+        List<Widget> bookingWidgets = [];
+
+        for (var booking in bookings!) {
+          String startTime = DateFormat('HH:mm').format(DateTime.parse('2022-01-06 ${booking['start_time']}'));
+          String endTime = DateFormat('HH:mm').format(DateTime.parse('2022-01-06 ${booking['end_time']}'));
+          String hostName = '${booking['user_fname']} ${booking['user_lname']}';
+
+          bookingWidgets.add(
+            Transform.translate(
+              offset: Offset(260, 0),
+              child: Row(
+                children: [
+                  Text(
+                    '$startTime - $endTime',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    ' By $hostName',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 24,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return Column(
+          children: bookingWidgets,
+        );
+      } else {
+        return Text(
+          'No Booking',
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+          ),
+        );
+      }
+    }
+
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0),
@@ -366,30 +458,9 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                     ),
                     Transform.translate(
                       offset: Offset(-120, 40),
-                      child: Container(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text('18:00 '+'-'+' 19.00' +' Host Name',
-                            style:TextStyle(
-                                fontSize: 24,
-                                color: Colors.white70
-                            ) ,),
-                        ),
-                      ),
+                    child: buildNextStatusInfo(),
                     ),
-                    Transform.translate(
-                      offset: Offset(-120, 40),
-                      child: Container(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text( '19:00 '+'-'+' 20.00' +' Host Name',
-                            style:TextStyle(
-                                fontSize: 24,
-                                color: Colors.white70
-                            ) ,),
-                        ),
-                      ),
-                    ),
+
                     Transform.translate(
                       offset: Offset(-100, 80),
                       child: Container(
