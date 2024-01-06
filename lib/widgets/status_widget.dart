@@ -17,7 +17,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
   List<Map<String, dynamic>>? bookings;
   String? formattedCurrentTime;
   bool x = false;
-  String y = '1';
+  bool y = false;
   late Timer _timer;
   Future<Map<String, dynamic>> fetchTimeSlots() async {
     try {
@@ -79,7 +79,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
 
       if (data['status'] == 'ok') {
         List<Map<String, dynamic>> bookings = [];
-
+        y = data['message']?.isNotEmpty == true;
         for (var booking in data['message']) {
           Map<String, dynamic> userDetails = booking['user_details'];
 
@@ -102,23 +102,21 @@ class _statusWidgetWidgetState extends State<statusWidget>{
     }
   }
 
-  @override
+  Future<void> fetchData() async {
+    await fetchTimeSlots();
+    final result = await getSelectNextBooking();
+    bookings = result;
+    setState(() {});
+  }
   @override
   void initState() {
     super.initState();
-    fetchTimeSlots().then((result) {
-      print(result);
-    });
-    getSelectNextBooking().then((result) {
-      // เก็บข้อมูลจาก selectNextBooking เพื่อนำไปใช้ในส่วนอื่น ๆ
-      bookings = result;
-    });
-    _timer = Timer.periodic(Duration(minutes: 1), (timer) {
-      fetchTimeSlots().then((result) {
-        setState(() {});
-      });
+    fetchData(); // เรียก fetchData ทั้งครั้งแรกเมื่อ initState เริ่มต้น
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      fetchData();
     });
   }
+
 
   @override
   void dispose() {
@@ -143,7 +141,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
             startTime = '${startParts[0]}:${startParts[1]}';
             endTime = '${endParts[0]}:${endParts[1]}';
           }
-         // x= true;
+          // x= true;
           return Text(
             '$startTime - $endTime',
             style: TextStyle(
@@ -168,7 +166,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
       );
     }
     Widget buildNextStatusInfo() {
-      if (bookings?.isNotEmpty == true) {
+      if (bookings?.isNotEmpty == true ) {
         List<Widget> bookingWidgets = [];
 
         for (var booking in bookings!) {
@@ -177,27 +175,47 @@ class _statusWidgetWidgetState extends State<statusWidget>{
           String hostName = '${booking['user_fname']} ${booking['user_lname']}';
 
           bookingWidgets.add(
-            Transform.translate(
-              offset: Offset(260, 0),
-              child: Row(
-                children: [
-                  Text(
-                    '$startTime - $endTime',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+            Stack(
+              children:[
+                Transform.translate(
+                  offset: Offset(0, 0),
+                  child: Container(
+                    width: 580,
+                    height: 1,
+                    color: Colors.white70,
                   ),
-                  Text(
-                    ' By $hostName',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 24,
-                    ),
+                ),
+                Transform.translate(
+                  offset: Offset(145, 40),
+                  child: Row(
+                    children: [
+                      Text(
+                        '$startTime - $endTime',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        ' By $hostName',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Transform.translate(
+                  offset: Offset(0, 140),
+                  child: Container(
+                    width: 580,
+                    height: 1,
+                    color: Colors.white70,
+                  ),
+                ),
+              ]
             ),
           );
         }
@@ -206,13 +224,37 @@ class _statusWidgetWidgetState extends State<statusWidget>{
           children: bookingWidgets,
         );
       } else {
-        return Text(
-          'No Booking',
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-          ),
+        return Stack(
+          children: [
+            Transform.translate(
+              offset: Offset(0, 0),
+              child: Container(
+                width: 580,
+                height: 1,
+                color: Colors.white70,
+              ),
+            ),
+            Transform.translate(
+              offset: Offset(242, 40),
+              child: Text(
+                'No Booking',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Transform.translate(
+              offset: Offset(0, 115),
+              child: Container(
+                width: 580,
+                height: 1,
+                color: Colors.white70,
+              ),
+            ),
+
+          ]
         );
       }
     }
@@ -448,38 +490,36 @@ class _statusWidgetWidgetState extends State<statusWidget>{
               offset: Offset(100,1000),
               child: Column(
                   children: [
-                    Transform.translate(
-                      offset: Offset(-100, 0),
-                      child: Container(
-                        width: 580,
-                        height: 1,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    Transform.translate(
-                      offset: Offset(-120, 40),
-                    child: buildNextStatusInfo(),
-                    ),
+                    // Transform.translate(
+                    //   offset: Offset(-100, 0),
+                    //   child: Container(
+                    //     width: 580,
+                    //     height: 1,
+                    //     color: Colors.white70,
+                    //   ),
+                    // ),
+                    buildNextStatusInfo(),
 
-                    Transform.translate(
-                      offset: Offset(-100, 80),
-                      child: Container(
-                        width: 580,
-                        height: 1,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Transform.translate(
-                        offset: Offset(-100, 100),
-                        child: Text(
-                          'Show All Bookings',
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white
-                          ),
-                        )
-                    ),
+
+                    // Transform.translate(
+                    //   offset: Offset(-100, 80),
+                    //   child: Container(
+                    //     width: 580,
+                    //     height: 1,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
+                    // Transform.translate(
+                    //     offset: Offset(-100, 100),
+                    //     child: Text(
+                    //       'Show All Bookings',
+                    //       style: TextStyle(
+                    //           fontSize: 22,
+                    //           fontWeight: FontWeight.w400,
+                    //           color: Colors.white
+                    //       ),
+                    //     )
+                    // ),
                   ]
               ),
             ),
