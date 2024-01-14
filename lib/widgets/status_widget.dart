@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../views/AllBookingPage.dart';
 import '../views/detail_page.dart';
 import 'dart:async';
 class statusWidget extends StatefulWidget {
@@ -181,8 +182,8 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                   offset: Offset(0, 0),
                   child: Container(
                     width: 580,
-                    height: 1,
-                    color: Colors.white70,
+                    height: 2,
+                    color: Colors.white24,
                   ),
                 ),
                 Transform.translate(
@@ -211,8 +212,8 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                   offset: Offset(0, 140),
                   child: Container(
                     width: 580,
-                    height: 1,
-                    color: Colors.white70,
+                    height: 2,
+                    color: Colors.white24,
                   ),
                 ),
               ]
@@ -490,37 +491,37 @@ class _statusWidgetWidgetState extends State<statusWidget>{
               offset: Offset(100,1000),
               child: Column(
                   children: [
-                    // Transform.translate(
-                    //   offset: Offset(-100, 0),
-                    //   child: Container(
-                    //     width: 580,
-                    //     height: 1,
-                    //     color: Colors.white70,
-                    //   ),
-                    // ),
+                   
                     buildNextStatusInfo(),
 
-
-                    // Transform.translate(
-                    //   offset: Offset(-100, 80),
-                    //   child: Container(
-                    //     width: 580,
-                    //     height: 1,
-                    //     color: Colors.white,
-                    //   ),
-                    // ),
-                    // Transform.translate(
-                    //     offset: Offset(-100, 100),
-                    //     child: Text(
-                    //       'Show All Bookings',
-                    //       style: TextStyle(
-                    //           fontSize: 22,
-                    //           fontWeight: FontWeight.w400,
-                    //           color: Colors.white
-                    //       ),
-                    //     )
-                    // ),
                   ]
+              ),
+            ),
+            Transform.translate(
+              offset: Offset(20, 0),
+              child: Container(
+                alignment: Alignment.topCenter,
+                margin: EdgeInsets.symmetric(horizontal: 100,vertical: 1170),
+                child: ElevatedButton(
+                    onPressed: (){
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => AllBookingPage())
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+
+                    ),
+                    child: Text(
+                      'View All Bookings',
+                      style: TextStyle(
+
+                          fontSize: 22,
+                          color:  Colors.white70
+                      ),
+                    )
+                ),
               ),
             ),
           ],
