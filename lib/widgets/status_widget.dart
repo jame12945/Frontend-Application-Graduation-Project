@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../views/AllBookingPage.dart';
+import '../views/CheckBookingByFacePage.dart';
 import '../views/detail_page.dart';
 import 'dart:async';
 class statusWidget extends StatefulWidget {
@@ -361,6 +362,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
             ),
             Column(
               children: [
+
                 Padding(
                   padding: const EdgeInsets.only(top:240,),
                   child: Container(
@@ -524,6 +526,21 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                 ),
               ),
             ),
+
+              Transform.translate(
+                offset: Offset(70,0),
+                child: Container(
+                  alignment: Alignment.topRight,
+                  margin: EdgeInsets.symmetric(horizontal: 100,vertical: 250),
+                  child: IconButton(onPressed:(){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => CheckBookingByFacePage())
+                    );
+                  }, icon: Image.asset('assets/icons8-face-recognition-64.png')),
+                ),
+              ),
+
           ],
         ),
       ),
