@@ -179,46 +179,46 @@ class _statusWidgetWidgetState extends State<statusWidget>{
 
           bookingWidgets.add(
             Stack(
-              children:[
-                Transform.translate(
-                  offset: Offset(0, 0),
-                  child: Container(
-                    width: 580,
-                    height: 2,
-                    color: Colors.white24,
+                children:[
+                  Transform.translate(
+                    offset: Offset(0, 0),
+                    child: Container(
+                      width: 580,
+                      height: 2,
+                      color: Colors.white24,
+                    ),
                   ),
-                ),
-                Transform.translate(
-                  offset: Offset(145, 40),
-                  child: Row(
-                    children: [
-                      Text(
-                        '$startTime - $endTime',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                  Transform.translate(
+                    offset: Offset(145, 40),
+                    child: Row(
+                      children: [
+                        Text(
+                          '$startTime - $endTime',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        ' By $hostName',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 24,
+                        Text(
+                          ' By $hostName',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 24,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Transform.translate(
-                  offset: Offset(0, 140),
-                  child: Container(
-                    width: 580,
-                    height: 2,
-                    color: Colors.white24,
+                  Transform.translate(
+                    offset: Offset(0, 140),
+                    child: Container(
+                      width: 580,
+                      height: 2,
+                      color: Colors.white24,
+                    ),
                   ),
-                ),
-              ]
+                ]
             ),
           );
         }
@@ -228,36 +228,36 @@ class _statusWidgetWidgetState extends State<statusWidget>{
         );
       } else {
         return Stack(
-          children: [
-            Transform.translate(
-              offset: Offset(0, 0),
-              child: Container(
-                width: 580,
-                height: 1,
-                color: Colors.white70,
-              ),
-            ),
-            Transform.translate(
-              offset: Offset(242, 40),
-              child: Text(
-                'No Booking',
-                style: TextStyle(
+            children: [
+              Transform.translate(
+                offset: Offset(0, 0),
+                child: Container(
+                  width: 580,
+                  height: 1,
                   color: Colors.white70,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
-            ),
-            Transform.translate(
-              offset: Offset(0, 115),
-              child: Container(
-                width: 580,
-                height: 1,
-                color: Colors.white70,
+              Transform.translate(
+                offset: Offset(242, 40),
+                child: Text(
+                  'No Booking',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-            ),
+              Transform.translate(
+                offset: Offset(0, 115),
+                child: Container(
+                  width: 580,
+                  height: 1,
+                  color: Colors.white70,
+                ),
+              ),
 
-          ]
+            ]
         );
       }
     }
@@ -494,7 +494,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
               offset: Offset(100,1000),
               child: Column(
                   children: [
-                   
+
                     buildNextStatusInfo(),
 
                   ]
@@ -513,7 +513,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
 
                     ),
                     child: Text(
@@ -528,31 +528,31 @@ class _statusWidgetWidgetState extends State<statusWidget>{
               ),
             ),
 
-              Transform.translate(
-                offset: Offset(70,0),
-                child: Column(
-                  children: [
-                    Container(
+            Transform.translate(
+              offset: Offset(70,0),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.topRight,
+                    margin: EdgeInsets.symmetric(horizontal: 100,vertical: 250),
+                    child: IconButton(onPressed:(){
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => CheckBookingByFacePage())
+                      );
+                    }, icon: Image.asset('assets/icons8-face-recognition-64.png')),
+                  ),
+                  Transform.translate(
+                    offset: Offset(-115, -250),
+                    child: Container(
                       alignment: Alignment.topRight,
-                      margin: EdgeInsets.symmetric(horizontal: 100,vertical: 250),
-                      child: IconButton(onPressed:(){
-                        Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => CheckBookingByFacePage())
-                        );
-                      }, icon: Image.asset('assets/icons8-face-recognition-64.png')),
+                      child: Text('Host',
+                        style: TextStyle(fontSize: 20 , color: Colors.white),),
                     ),
-                    Transform.translate(
-                      offset: Offset(-115, -250),
-                      child: Container(
-                        alignment: Alignment.topRight,
-                        child: Text('Host',
-                          style: TextStyle(fontSize: 20 , color: Colors.white),),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
+            ),
             Transform.translate(
               offset: Offset(-30,0),
               child: Column(
@@ -578,7 +578,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                 ],
               ),
             ),
-           
+
 
           ],
         ),
