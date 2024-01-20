@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../views/AllBookingPage.dart';
+import '../views/CheckBookingAttendeeByface.dart';
 import '../views/CheckBookingByFacePage.dart';
 import '../views/detail_page.dart';
 import 'dart:async';
@@ -529,17 +530,55 @@ class _statusWidgetWidgetState extends State<statusWidget>{
 
               Transform.translate(
                 offset: Offset(70,0),
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: EdgeInsets.symmetric(horizontal: 100,vertical: 250),
-                  child: IconButton(onPressed:(){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => CheckBookingByFacePage())
-                    );
-                  }, icon: Image.asset('assets/icons8-face-recognition-64.png')),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.topRight,
+                      margin: EdgeInsets.symmetric(horizontal: 100,vertical: 250),
+                      child: IconButton(onPressed:(){
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => CheckBookingByFacePage())
+                        );
+                      }, icon: Image.asset('assets/icons8-face-recognition-64.png')),
+                    ),
+                    Transform.translate(
+                      offset: Offset(-115, -250),
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        child: Text('Host',
+                          style: TextStyle(fontSize: 20 , color: Colors.white),),
+                      ),
+                    )
+                  ],
                 ),
               ),
+            Transform.translate(
+              offset: Offset(-30,0),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.topRight,
+                    margin: EdgeInsets.symmetric(horizontal: 100,vertical: 250),
+                    child: IconButton(onPressed:(){
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => CheckBookingAttendeeByFacePage())
+                      );
+                    }, icon: Image.asset('assets/icons8-face-recognition-64.png')),
+                  ),
+                  Transform.translate(
+                    offset: Offset(-95, -250),
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Text('Attendee',
+                        style: TextStyle(fontSize: 20 , color: Colors.white),),
+                    ),
+                  )
+                ],
+              ),
+            ),
+           
 
           ],
         ),

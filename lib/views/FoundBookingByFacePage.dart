@@ -29,6 +29,10 @@ class FoundBookingByFacePage extends StatelessWidget {
             Text("Reservation ID:${reservationData["reservation_id"]}"),
             Text("Start Time: ${reservationData["start_time"]}"),
             Text("End Time: ${reservationData["end_time"]}"),
+            Text("Date: ${reservationData["date_reservation"]}"),
+            Text("Create: ${reservationData["create_reservlog"]}"),
+            Text("Update: ${reservationData["update_reservlog"]}"),
+            Text("attendee list: ${reservationData["attendee_email"]}"),
           ]
         ),
       ),
