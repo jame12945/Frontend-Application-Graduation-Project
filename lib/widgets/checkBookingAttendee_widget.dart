@@ -170,7 +170,7 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
         setState(() {
           name = recognizedName;
           // detectedName = recognizedName;
-          isLoading = true;
+
           isIdentityVerified = true;
         });
 
@@ -216,7 +216,7 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
     final Map<String, dynamic> nameData = {
       "nameFromFaceRecognition": name,
     };
-    try {
+
       final response = await http.post(
         nodeUrl,
         headers: {
@@ -231,12 +231,19 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
         Map<String, dynamic> responseData = json.decode(response.body);
         data0 = responseData["data"][0];
         print('Data 0 from server: $data0');
+        if (data0 == null || data0!.isEmpty || data0?["date_reservation"] == null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => CheckBookingAttendeeByFacePage()),
+          );
+        }
+
       } else {
+
         print('ไม่สามารถส่งค่า name ไปยังเซิร์ฟเวอร์ รหัสสถานะ: ${response.statusCode}');
       }
-    } catch (e) {
-      print('เกิดข้อผิดพลาดในการเชื่อมต่อ: $e');
-    }
+
+
   }
 
 
@@ -320,36 +327,35 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
             Transform.translate(
               offset: Offset(0.0, -200.0),
               child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(top:0.0),
-                    child: ElevatedButton(
-                      onPressed:(){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context)=>CheckBookingAttendeeByFacePage())
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-
-
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)
-                        ),
-                        padding:EdgeInsets.symmetric(horizontal: 100 , vertical: 10)
-                        ,
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top:0.0),
+                  child: ElevatedButton(
+                    onPressed:(){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckBookingAttendeeByFacePage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)
                       ),
-                      child: Text("Retry",style: TextStyle(
+                      padding: EdgeInsets.symmetric(horizontal: 100 , vertical: 10),
+                    ),
+                    child: Text(
+                      "Retry",
+                      style: TextStyle(
                         color: Colors.red,
                         fontSize: 26,
-
-                      ),),
-
+                      ),
                     ),
-                  )
+                  ),
+                ),
               ),
-            )
+            ),
+
 
 
         ],

@@ -169,7 +169,7 @@ class _CheckBookingByFaceWidgetState extends State<CheckBookingByFaceWidget> {
         setState(() {
           name = recognizedName;
           // detectedName = recognizedName;
-          isLoading = true;
+
           isIdentityVerified = true;
         });
 
@@ -215,7 +215,7 @@ class _CheckBookingByFaceWidgetState extends State<CheckBookingByFaceWidget> {
     final Map<String, dynamic> nameData = {
       "nameFromFaceRecognition": name,
     };
-    try {
+
       final response = await http.post(
         nodeUrl,
         headers: {
@@ -232,9 +232,7 @@ class _CheckBookingByFaceWidgetState extends State<CheckBookingByFaceWidget> {
         print('Data 0 from server: $data0');
       } else {
         print('ไม่สามารถส่งค่า name ไปยังเซิร์ฟเวอร์ รหัสสถานะ: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('เกิดข้อผิดพลาดในการเชื่อมต่อ: $e');
+
     }
   }
 
