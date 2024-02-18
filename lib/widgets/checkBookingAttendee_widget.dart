@@ -47,7 +47,10 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
       await requestPermission();
       final cameras = await availableCameras();
       final camera = cameras.first;
-      controller = CameraController(camera, ResolutionPreset.medium);
+      final frontCamera = cameras.firstWhere(
+            (camera) => camera.lensDirection == CameraLensDirection.front,
+      );
+      controller = CameraController(frontCamera, ResolutionPreset.medium);
 
       // Ensure the controller is initialized
       await controller?.initialize();
@@ -139,7 +142,7 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
 
   void uploadImage(File imageFile) async {
 
-    final modelUrl = Uri.parse('http://10.0.2.2:8000/recognize-face/');
+    final modelUrl = Uri.parse('http://192.168.1.5:8000/recognize-face/');
 
     final request = http.MultipartRequest('POST', modelUrl);
     request.files.add(
@@ -212,7 +215,7 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
 
   }
   Future<void> sendNameToServer(String name) async {
-    final nodeUrl = Uri.parse('http://10.0.2.2:3000/passAttendeeToBookingByface');
+    final nodeUrl = Uri.parse('http://192.168.1.5:3000/passAttendeeToBookingByface');
     final Map<String, dynamic> nameData = {
       "nameFromFaceRecognition": name,
     };

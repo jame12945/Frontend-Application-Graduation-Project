@@ -24,7 +24,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
   late Timer _timer;
   Future<Map<String, dynamic>> fetchTimeSlots() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/selectStatusTime'));
+      final response = await http.get(Uri.parse('http://192.168.1.5:3000/selectStatusTime'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -71,7 +71,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
 
   Future<List<Map<String, dynamic>>> getSelectNextBooking() async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/selectNextBooking'),
+      Uri.parse('http://192.168.1.5:3000/selectNextBooking'),
     );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -270,7 +270,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
         child: Stack(
           children: [
             Container(
-              width: Get.width,
+              width: Get.width*1.0,
               height: 240,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -316,7 +316,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
                 Align(
                   alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: const EdgeInsets.only(top:90.0,left: 40.0),
+                    padding: const EdgeInsets.only(top:90.0,left: 36.0),
                     child: Text(
                       'Meeting Room',
                       style: TextStyle(
@@ -351,7 +351,7 @@ class _statusWidgetWidgetState extends State<statusWidget>{
             Align(
               alignment: Alignment.topCenter,
               child:Padding(
-                padding: const EdgeInsets.only(left: 450.0,top:50.0 ),
+                padding: const EdgeInsets.only(left: 560.0,top:50.0 ),
                 child: Text(
                   '01',
                   style: TextStyle(

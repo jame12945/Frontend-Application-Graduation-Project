@@ -38,32 +38,33 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
   }
 
   void initCamera() async {
-    try{
+    try {
       await requestPermission();
       final cameras = await availableCameras();
-      final camera = cameras.first;
-      controller = CameraController(camera, ResolutionPreset.medium);
+      // เลือกกล้องหน้า
+      final frontCamera = cameras.firstWhere(
+            (camera) => camera.lensDirection == CameraLensDirection.front,
+      );
+      controller = CameraController(frontCamera, ResolutionPreset.medium);
 
-      // Ensure the controller is initialized
+      // รอให้คอนโทรลเลอร์เตรียมพร้อม
       await controller?.initialize();
 
       if (mounted) {
         setState(() {});
       }
 
-      // เรียกใช้ captureAndSaveImage เมื่อกล้องถูกเริ่มใช้งาน
+      // เรียกใช้ captureAndSaveImage เมื่อกล้องเริ่มทำงาน
       final path = '/storage/emulated/0/Download';
       Future.delayed(Duration(seconds: 2),(){
         captureAndSaveImage();
         uploadImage(File('$path/image.jpg'));
       });
-    }
-    catch(e){
+    } catch (e) {
       print("Error initializing camera: $e");
     }
-
-
   }
+
   Future<void> requestPermission() async {
     var status = await Permission.storage.request();
     if (status.isGranted) {
@@ -132,7 +133,7 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
 
 
   void uploadImage(File imageFile) async {
-    final modelUrl = Uri.parse('http://10.0.2.2:8000/recognize-face/');
+    final modelUrl = Uri.parse('http://192.168.1.5:8000/recognize-face/');
 
     final request = http.MultipartRequest('POST', modelUrl);
     request.files.add(
@@ -162,8 +163,6 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
         // อัปเดตค่า name ด้วยชื่อที่ได้รับจากเซิร์ฟเวอร์
         setState(() {
           name = recognizedName;
-          // detectedName = recognizedName;
-          isLoading = true;
           isIdentityVerified = true;
         });
 
@@ -205,11 +204,11 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
 
   }
   Future<void> sendNameToServer(String name) async {
-    final nodeUrl = Uri.parse('http://10.0.2.2:3000/faceRecognition');
+    final nodeUrl = Uri.parse('http://192.168.1.5:3000/faceRecognition');
     final Map<String, dynamic> nameData = {
       "nameFromFaceRecognition": name,
     };
-    try {
+
       final response = await http.post(
         nodeUrl,
         headers: {
@@ -222,11 +221,10 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
         print('ส่งค่า name ไปยังเซิร์ฟเวอร์สำเร็จ');
         print('Response from server: ${response.body}');
       } else {
-        print('ไม่สามารถส่งค่า name ไปยังเซิร์ฟเวอร์ รหัสสถานะ: ${response.statusCode}');
+        print('ไม่สามารถส่งค่า name ไปยังเซิร์ฟเวอร์ รหัสสถานะ: ${response
+            .statusCode}');
       }
-    } catch (e) {
-      print('เกิดข้อผิดพลาดในการเชื่อมต่อ: $e');
-    }
+
   }
 
 
@@ -257,15 +255,16 @@ class _AuthorizeWidgetState extends State<AuthorizeWidget> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 130.0, vertical: 180),
-                    child: AspectRatio(
-                      aspectRatio: controller!.value.aspectRatio,
-                      child: CameraPreview(controller!),
-                    ),
+                    child: RotationTransition(turns: AlwaysStoppedAnimation(0/360),
+                      child: CameraPreview(controller!),)
+                    ,
                   ),
 
                 ),
 
+
               ),
+
 
               Transform.translate(
                 offset: Offset(0, -1100),

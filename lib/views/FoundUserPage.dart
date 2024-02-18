@@ -25,7 +25,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
 
   Future<void> fetchStartTime() async {
 
-    final url = Uri.parse('http://10.0.2.2:3000/getLastreservations');
+    final url = Uri.parse('http://192.168.1.5:3000/getLastreservations');
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -52,7 +52,7 @@ class _FoundUserPageState extends State<FoundUserPage> {
   }
 Future<Map<String,dynamic>> deleteLastReservation() async
 {
-  final url = Uri.parse('http://10.0.2.2:3000/deleteLastReservation');
+  final url = Uri.parse('http://192.168.1.5:3000/deleteLastReservation');
   final response = await http.delete(url);
   if(response.statusCode== 200){
     print('delete successful');
@@ -266,7 +266,7 @@ Future<Map<String,dynamic>> deleteLastReservation() async
                                   ),
                                 ),
                                 Transform.translate(
-                                  offset: Offset(0, -30),
+                                  offset: Offset(0, -60),
                                   child: ElevatedButton(
                                       onPressed: () async {
                                         await fetchStartTime();
@@ -300,7 +300,7 @@ Future<Map<String,dynamic>> deleteLastReservation() async
                                   ),
                                 ),
                                 Transform.translate(
-                                    offset: Offset(0,-25),
+                                    offset: Offset(0,-58),
                                 child: ElevatedButton(
                                   onPressed:() async {
                                     final deleteResult = await deleteLastReservation();

@@ -95,7 +95,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
   void sendReservationData() async {
 
-    final nodeUrl = Uri.parse('http://10.0.2.2:3000/appreserveroom/9');
+    final nodeUrl = Uri.parse('http://192.168.1.5:3000/appreserveroom/9');
     final Map<String, dynamic> reservationData = {
       "start_time": _selectedValue,
       "end_time": _selectedEndTimeValue,
@@ -126,7 +126,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
   Future<void> fetchEmailsFromAPI() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/selectAttendee'));
+      final response = await http.get(Uri.parse('http://192.168.1.5:3000/selectAttendee'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         final List<String> apiEmails = List<String>.from(data['email']);
