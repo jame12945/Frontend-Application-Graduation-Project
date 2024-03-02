@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,8 @@ class _statusWidgetWidgetState extends State<statusWidget>{
   late Timer _timer;
   Future<Map<String, dynamic>> fetchTimeSlots() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.5:3000/selectStatusTime'));
+      final String apiUrl ='${dotenv.env['BASE_URL']}selectStatusTime';
+      final response = await http.get(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -70,8 +72,10 @@ class _statusWidgetWidgetState extends State<statusWidget>{
   }
 
   Future<List<Map<String, dynamic>>> getSelectNextBooking() async {
+    final String apiUrl ='${dotenv.env['BASE_URL']}selectNextBooking';
     final response = await http.get(
-      Uri.parse('http://192.168.1.5:3000/selectNextBooking'),
+
+      Uri.parse(apiUrl),
     );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');

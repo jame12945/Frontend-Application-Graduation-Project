@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +17,9 @@ class _allBookingWidgetState extends State<allBookingWidget> {
   List<Map<String, dynamic>>? bookings;
 
   Future<List<Map<String, dynamic>>> getAllBooking() async {
+    final String apiUrl ='${dotenv.env['BASE_URL']}selectAllRoomBooking';
     final response = await http.get(
-      Uri.parse('http://192.168.1.5:3000/selectAllRoomBooking'),
+      Uri.parse(apiUrl),
     );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');

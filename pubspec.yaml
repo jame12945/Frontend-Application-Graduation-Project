@@ -50,6 +50,7 @@ dependencies:
   get: ^4.6.5
   flutter_svg: ^1.1.4
   google_fonts: ^4.0.4
+  flutter_dotenv: ^5.1.0
 
 
 dev_dependencies:
@@ -83,6 +84,7 @@ flutter:
      - assets/Air-Condition.png
      - assets/HomePic.jpg
      - assets/statusPic2.jpg
+     - env/
 
   #   - images/a_dot_ham.jpeg
 

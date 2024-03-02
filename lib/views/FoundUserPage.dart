@@ -1,6 +1,7 @@
 import 'package:bookingapp/views/ProofPage.dart';
 import 'package:bookingapp/views/ReservationProcess_Page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -24,8 +25,8 @@ class _FoundUserPageState extends State<FoundUserPage> {
   int reservationID = 0;
 
   Future<void> fetchStartTime() async {
-
-    final url = Uri.parse('http://192.168.1.5:3000/getLastreservations');
+    final String apiUrl ='${dotenv.env['BASE_URL']}getLastreservations';
+    final url = Uri.parse(apiUrl);
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -52,7 +53,8 @@ class _FoundUserPageState extends State<FoundUserPage> {
   }
 Future<Map<String,dynamic>> deleteLastReservation() async
 {
-  final url = Uri.parse('http://192.168.1.5:3000/deleteLastReservation');
+  final String apiUrl ='${dotenv.env['BASE_URL']}deleteLastReservation';
+  final url = Uri.parse(apiUrl);
   final response = await http.delete(url);
   if(response.statusCode== 200){
     print('delete successful');

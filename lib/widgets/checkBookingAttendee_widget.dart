@@ -4,6 +4,7 @@ import 'package:bookingapp/views/FoundUserPage.dart';
 import 'package:bookingapp/views/ReservationProcess_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -141,8 +142,8 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
 
 
   void uploadImage(File imageFile) async {
-
-    final modelUrl = Uri.parse('http://192.168.1.5:8000/recognize-face/');
+    final String apiUrl ='${dotenv.env['BASE_URL2']}recognize-face/';
+    final modelUrl = Uri.parse(apiUrl);
 
     final request = http.MultipartRequest('POST', modelUrl);
     request.files.add(
@@ -215,7 +216,8 @@ class _CheckBookingAttendeeByFaceWidgetState extends State<CheckBookingAttendeeB
 
   }
   Future<void> sendNameToServer(String name) async {
-    final nodeUrl = Uri.parse('http://192.168.1.5:3000/passAttendeeToBookingByface');
+    final String apiUrl ='${dotenv.env['BASE_URL']}passAttendeeToBookingByface';
+    final nodeUrl = Uri.parse(apiUrl);
     final Map<String, dynamic> nameData = {
       "nameFromFaceRecognition": name,
     };

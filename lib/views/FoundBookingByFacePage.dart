@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -19,9 +20,10 @@ class _FoundBookingByFacePageState extends State<FoundBookingByFacePage> {
     super.initState();
     closeDoor();
   }
-
+//test
   Future<void> fetchDoorStatus() async {
-    final response = await http.get(Uri.parse('http://192.168.1.10/status'));
+    final String apiUrl ='${dotenv.env['BASE_URL3']}status';
+    final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       setState(() {
         doorStatus = response.body;
@@ -34,7 +36,8 @@ class _FoundBookingByFacePageState extends State<FoundBookingByFacePage> {
   }
 
   Future<void> closeDoor() async {
-    final response = await http.get(Uri.parse('http://192.168.1.10/open'));
+    final String apiUrl ='${dotenv.env['BASE_URL3']}open';
+    final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       fetchDoorStatus(); // Update door status after opening
     } else {
@@ -43,7 +46,8 @@ class _FoundBookingByFacePageState extends State<FoundBookingByFacePage> {
   }
 
   Future<void> openDoor() async {
-    final response = await http.get(Uri.parse('http://192.168.1.10/close'));
+    final String apiUrl ='${dotenv.env['BASE_URL3']}close';
+    final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       fetchDoorStatus();
     } else {

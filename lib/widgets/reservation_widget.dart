@@ -7,6 +7,7 @@ import 'package:bookingapp/views/FoundUserPage.dart';
 import 'package:bookingapp/views/HomePage.dart';
 import 'package:bookingapp/widgets/authorize_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
@@ -94,8 +95,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
   }
 
   void sendReservationData() async {
-
-    final nodeUrl = Uri.parse('http://192.168.1.5:3000/appreserveroom/9');
+    final String apiUrl ='${dotenv.env['BASE_URL']}appreserveroom/9';
+    final nodeUrl = Uri.parse(apiUrl);
     final Map<String, dynamic> reservationData = {
       "start_time": _selectedValue,
       "end_time": _selectedEndTimeValue,
@@ -126,7 +127,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
 
   Future<void> fetchEmailsFromAPI() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.1.5:3000/selectAttendee'));
+      final String apiUrl ='${dotenv.env['BASE_URL']}selectAttendee';
+      final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         final List<String> apiEmails = List<String>.from(data['email']);
