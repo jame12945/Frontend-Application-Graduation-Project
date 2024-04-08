@@ -11,7 +11,7 @@ Features
     -Can check room availability and choose suitable time slots.
 2).On-Site Application for Urgent Reservations
     -A dedicated on-site application for quick and urgent room
+## Youtube Link:
+https://www.youtube.com/watch?v=Hq-V3su4vCU
 
-## System Diagram
-<img src="https://scontent.fkkc3-1.fna.fbcdn.net/v/t1.15752-9/405139945_188931787548451_9114017480055219025_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=tVzzDeEw4rsAX9V2mkx&_nc_ht=scontent.fkkc3-1.fna&cb_e2o_trans=q&oh=03_AdTLL449xs8sf-62PWc3jX-wZS0gYSYjLpgjt_C5FV7igg&oe=658AB6A4" alt="System Diagram">
 
