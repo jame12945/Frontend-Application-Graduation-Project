@@ -11,7 +11,7 @@ Features
     -Can check room availability and choose suitable time slots.
 2).On-Site Application for Urgent Reservations
     -A dedicated on-site application for quick and urgent room
-## Demo Video & Figma Link:
+## Demo Video & UI Link:
 https://www.youtube.com/watch?v=Hq-V3su4vCU<br/>
 https://www.figma.com/design/dT6Nj05dYHeTO4R56Hky9I/Application-On-Tablet?node-id=0-1&p=f&t=3WgNfVnXMOdbgWF7-0
 <img width="1291" height="693" alt="image" src="https://github.com/user-attachments/assets/0c0182a6-0cc9-4987-bfdd-329a95129544" />
